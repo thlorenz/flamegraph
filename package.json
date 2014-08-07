@@ -1,0 +1,56 @@
+{
+  "name": "flamegraphs",
+  "version": "0.0.0",
+  "description": "Porting brendangregg's FlameGraph perl scripts to JavaScript.",
+  "main": "index.js",
+  "scripts": {
+    "test-main": "tape test/*.js",
+    "test-0.10": "nave use 0.10 npm run test-main",
+    "test-0.11": "nave use 0.11 npm run test-main",
+    "test-all": "npm run test-main && npm run test-0.10 && npm run test-0.11",
+    "test": "if [ -e $TRAVIS ]; then npm run test-all; else npm run test-main; fi"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/thlorenz/flamegraphs.git"
+  },
+  "homepage": "https://github.com/thlorenz/flamegraphs",
+  "dependencies": {
+    "readable-stream": "^1.0.27-1",
+    "split2": "^0.1.2"
+  },
+  "devDependencies": {
+    "apply-transform": "^0.1.4",
+    "nave": "~0.4.3",
+    "tape": "~1.0.4"
+  },
+  "keywords": [],
+  "author": {
+    "name": "Thorsten Lorenz",
+    "email": "thlorenz@gmx.de",
+    "url": "http://thlorenz.com"
+  },
+  "license": {
+    "type": "MIT",
+    "url": "https://github.com/thlorenz/flamegraphs/blob/master/LICENSE"
+  },
+  "engine": {
+    "node": ">=0.10"
+  },
+  "testling": {
+    "files": "test/*.js",
+    "browsers": [
+      "ie/8..latest",
+      "firefox/21..latest",
+      "firefox/nightly",
+      "chrome/27..latest",
+      "chrome/canary",
+      "opera/12..latest",
+      "opera/next",
+      "safari/5.1..latest",
+      "ipad/6.0..latest",
+      "iphone/6.0..latest",
+      "android-browser/4.2..latest"
+    ]
+  }
+}

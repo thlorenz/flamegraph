@@ -2,7 +2,7 @@
 
 [![testling badge](https://ci.testling.com/thlorenz/flamegraph.png)](https://ci.testling.com/thlorenz/flamegraph)
 
-Generate flamegraphs with Node.js or in the browser.
+Generates flamegraphs with Node.js or in the browser.
 
 ```
 cat instruments-callgraph.csv | flamegraph -t instruments > flamegraph.svg

@@ -1,13 +1,12 @@
-# flamegraphs [![build status](https://secure.travis-ci.org/thlorenz/flamegraphs.png)](http://travis-ci.org/thlorenz/flamegraphs) 
+# flamegraph [![build status](https://secure.travis-ci.org/thlorenz/flamegraph.png)](http://travis-ci.org/thlorenz/flamegraph) 
 
-[![testling badge](https://ci.testling.com/thlorenz/flamegraphs.png)](https://ci.testling.com/thlorenz/flamegraphs)
+[![testling badge](https://ci.testling.com/thlorenz/flamegraph.png)](https://ci.testling.com/thlorenz/flamegraph)
 
 Generate flamegraphs with Node.js or in the browser.
 
 ```
 cat instruments-callgraph.csv | flamegraph -t instruments > flamegraph.svg
 ```
-
 
 ## Installation
 

@@ -1,7 +1,7 @@
 {
   "name": "flamegraph",
   "version": "0.0.0",
-  "description": "Porting brendangregg's FlameGraph perl scripts to JavaScript.",
+  "description": "Generates flamegraphs with Node.js or in the browser",
   "main": "index.js",
   "bin": {
     "flamegraph": "bin/flamegraph.js"
@@ -30,7 +30,7 @@
     "nave": "~0.4.3",
     "tape": "~1.0.4"
   },
-  "keywords": [],
+  "keywords": [ "flamegraph", "flamegraphs", "svg", "stack", "callgraph" ],
   "author": {
     "name": "Thorsten Lorenz",
     "email": "thlorenz@gmx.de",

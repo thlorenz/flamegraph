@@ -4,8 +4,8 @@ Generates a flamegraph from the callgraph data of the given `inputtype` that is 
 
 OPTIONS:
 
-  -h --help       print this help message 
-  -t --inputtype  the type of callgraph (only 'instruments' supported at this point)
+  --inputtype -t  the type of callgraph (only 'instruments' supported at this point)
+
   --fonttype      font family used                  default: 'Verdana'
   --fontsize      base text size                    default: 12
   --imagewidth    max width, pixels                 default: 1200
@@ -21,6 +21,8 @@ OPTIONS:
   --hash          color by function name            default: true
   --titletext     centered heading                  default: 'Flame Graph'
   --nametype      what are the names in the data?   default: 'Function:'
+
+  --help      -h  print this help message 
 
 EXAMPLE:
 

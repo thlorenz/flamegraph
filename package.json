@@ -3,6 +3,11 @@
   "version": "0.1.0",
   "description": "Generates flamegraphs with Node.js or in the browser",
   "main": "index.js",
+  "browserify": {
+    "transform": [
+      "brfs"
+    ]
+  },
   "bin": {
     "flamegraph": "bin/flamegraph.js"
   },
@@ -19,6 +24,7 @@
   },
   "homepage": "https://github.com/thlorenz/flamegraph",
   "dependencies": {
+    "brfs": "^1.0.2",
     "handlebars": "~2.0.0-alpha.4",
     "minimist": "~0.2.0",
     "readable-stream": "~1.0.27-1",
@@ -27,6 +33,7 @@
     "xtend": "~4.0.0"
   },
   "devDependencies": {
+    "apply-transform": "^0.1.4",
     "nave": "~0.4.3",
     "tape": "~1.0.4"
   },

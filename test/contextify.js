@@ -56,6 +56,9 @@ function inspect(obj, depth) {
 
 test('\ncontextifying parsed stack with default options', function (t) {
   var context = contextify(parsed, defaultOpts);
+  // hack to work around the fact that `toLocaleString` works slightly different in the browser than in node
+  // i.e. `toLocaleString(1602) is '1,602' in the browser and `1602` in node
+  context.nodes.forEach(function (x) { x.samples = x.samples.replace(/(\d),(\d)/, '$1$2') })
 
   t.deepEqual(
       context

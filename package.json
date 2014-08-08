@@ -1,6 +1,6 @@
 {
   "name": "flamegraph",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Generates flamegraphs with Node.js or in the browser",
   "main": "index.js",
   "bin": {
@@ -30,7 +30,13 @@
     "nave": "~0.4.3",
     "tape": "~1.0.4"
   },
-  "keywords": [ "flamegraph", "flamegraphs", "svg", "stack", "callgraph" ],
+  "keywords": [
+    "flamegraph",
+    "flamegraphs",
+    "svg",
+    "stack",
+    "callgraph"
+  ],
   "author": {
     "name": "Thorsten Lorenz",
     "email": "thlorenz@gmx.de",

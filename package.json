@@ -16,8 +16,10 @@
   },
   "homepage": "https://github.com/thlorenz/flamegraphs",
   "dependencies": {
+    "handlebars": "^2.0.0-alpha.4",
     "readable-stream": "^1.0.27-1",
-    "split2": "^0.1.2"
+    "split2": "^0.1.2",
+    "xtend": "^4.0.0"
   },
   "devDependencies": {
     "apply-transform": "^0.1.4",

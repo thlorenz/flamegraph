@@ -1,0 +1,34 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" width="{{imagewidth}}" height="{{imageheight}}" onload="init(evt)" viewBox="0 0 1200 578" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>
+	<linearGradient id="background" y1="0" y2="1" x1="0" x2="0">
+    <stop stop-color="{{bgcolor1}}" offset="5%" />
+    <stop stop-color="{{bgcolor2}}" offset="95%" />
+	</linearGradient>
+</defs>
+<style type="text/css">
+	.func_g:hover { stroke:black; stroke-width:0.5; }
+</style>
+<script type="text/ecmascript">
+<![CDATA[
+	var details;
+	function init(evt) { details = document.getElementById("details").firstChild; }
+  function s(info) { details.nodeValue = "{{nametype}}: " + info; }
+	function c() { details.nodeValue = ' '; }
+]]>
+</script>
+
+{{#each nodes}}
+<g class="func_g" onmouseover="s('{{{name}}} {{{samples}}}')" onmouseout="c()">
+<title>{{{name}}} {{{samples}}}</title>
+  <rect x="{{rect_x}}" y="{{rect_y}}" width="{{rect_w}}" height="{{rect_h}}" fill="{{rect_fill}}" rx="2" ry="2" />
+
+{{#if showText }}
+<text text-anchor="" x="{{text_x}}" y="{{text_y}}" font-size="{{../fontsize}}" font-family="{{../fonttype}}" fill="rgb(0,0,0)">{{{text}}}</text>
+{{/if}}
+
+</g>
+{{/each}}
+
+</svg>

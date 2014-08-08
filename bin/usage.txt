@@ -1,22 +1,4 @@
-# flamegraphs [![build status](https://secure.travis-ci.org/thlorenz/flamegraphs.png)](http://travis-ci.org/thlorenz/flamegraphs) 
-
-[![testling badge](https://ci.testling.com/thlorenz/flamegraphs.png)](https://ci.testling.com/thlorenz/flamegraphs)
-
-Generate flamegraphs with Node.js or in the browser.
-
-```
-cat instruments-callgraph.csv | flamegraph -t instruments > flamegraph.svg
-```
-
-
-## Installation
-
-    npm install flamegraph
-
-## Usage
-
-```
-flamegraph <options>
+usage: flamegraph <options>
 
 Generates a flamegraph from the callgraph data of the given `inputtype` that is streamed into it.
 
@@ -43,14 +25,3 @@ OPTIONS:
 EXAMPLE:
 
   cat instruments-callgraph.csv | flamegraph -t instruments > flamegraph.svg
-```
-
-## API
-
-## Kudos
-
-This library is an adaptation of @brendangregg's [FlameGraph perl scripts](https://github.com/brendangregg/FlameGraph).
-
-## License
-
-MIT

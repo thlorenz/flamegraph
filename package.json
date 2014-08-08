@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "description": "Porting brendangregg's FlameGraph perl scripts to JavaScript.",
   "main": "index.js",
+  "bin": {
+    "flamegraph": "bin/flamegraph.js"
+  },
   "scripts": {
     "test-main": "tape test/*.js",
     "test-0.10": "nave use 0.10 npm run test-main",
@@ -17,6 +20,7 @@
   "homepage": "https://github.com/thlorenz/flamegraphs",
   "dependencies": {
     "handlebars": "~2.0.0-alpha.4",
+    "minimist": "^0.2.0",
     "readable-stream": "~1.0.27-1",
     "split2": "~0.1.2",
     "through2": "~0.6.0",

@@ -14,8 +14,8 @@ exports = module.exports =
  * @name flamegraph
  * @function
  * @param {ReadableStream} stream that will emit the call graph lines to be parsed
- * @param {string} inputType the type of callgraph `instruments | `
  * @param {Object}  opts objects that affect the visualization
+ * @param {string}  opts.inputtype   the type of callgraph `instruments | `
  * @param {string=} opts.fonttype                                      default: `'Verdana'`
  * @param {number=} opts.fontsize    base text size                    default: `12`
  * @param {number=} opts.imagewidth  max width, pixels                 default: `1200`
@@ -32,15 +32,15 @@ exports = module.exports =
  * @param {string=} opts.titletext   centered heading                  default: `'Flame Graph'`
  * @param {string=} opts.nametype    what are the names in the data?   default: `'Function:'`
  */
-function flamegraph(stream, inputType, opts) {
+function flamegraph(stream, opts) {
   var collapse;
 
-  switch(inputType) {
+  switch(opts.inputtype) {
     case 'instruments':
       collapse = exports.stackCollapseInstruments
       break;
     default:
-      throw new Error('Unsupported input type ' + inputType);
+      throw new Error('Unsupported input type ' + opts.inputtype);
   }
 
   var chunks = [];

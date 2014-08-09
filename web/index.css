@@ -43,7 +43,6 @@
 }
 
 #inputfile-button {
-  float: left;
   margin-left: -44px;
   margin-top: -3px;
   margin-bottom: 10px;
@@ -53,7 +52,6 @@
 }
 
 #inputfile {
-  float: left;
   margin-right: -200px;
   margin-left: 20px;
 }

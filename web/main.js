@@ -40,6 +40,5 @@ function onFile(e) {
 
 inputfileEl.addEventListener('change', onFile);
 inputfileButtonEl.onclick = function () {
-  console.log('clicking');
   inputfileEl.click();
 }

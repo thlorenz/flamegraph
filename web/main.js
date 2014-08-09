@@ -6,8 +6,12 @@ var inputfileButtonEl = document.getElementById('inputfile-button')
 
 function hookHoverMethods() {
   var details = document.getElementById("details").firstChild;
-  window.s = function s(info) { details.nodeValue = "Function: " + info; }
-  window.c = function c() { details.nodeValue = ' '; }
+  window.s = function s(info) { 
+    details.nodeValue = "Function: " + info; 
+  }
+  window.c = function c() { 
+    details.nodeValue = ' '; 
+  }
 }
 
 function readFile(file, cb) {

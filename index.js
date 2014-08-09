@@ -35,6 +35,7 @@ exports = module.exports =
  * @param {string=} opts.nametype    what are the names in the data?   default: `'Function:'`
  */
 function flamegraph(stream, opts) {
+  opts = opts || {};
   var pt = new through();
 
   var inputType = opts.inputtype;
@@ -87,14 +88,15 @@ function flamegraph(stream, opts) {
 exports.svg = require('./lib/svg');
 exports.stackCollapse = require('./lib/stackcollapse')
 
-exports.stackCollpaseFromArray = function stackCollpaseFromArray (arr, inputType) {
+exports.stackCollapseFromArray = function stackCollpaseFromArray (arr, inputType) {
   inputType = inputType || detectInputType(arr);
   if (!inputType) throw new Error('No input type given and unable to detect it for the given input!');
 
   return exports.stackCollapse.array(inputType, arr);
 }
 
-exports.flamegraphFromArray = function flamegraphFromArray (arr, opts) {
+exports.fromArray = function flamegraphFromArray (arr, opts) {
+  opts = opts || {};
   var collapsed = exports.stackCollapseFromArray(arr, opts.inputtype);
   return exports.svg(collapsed, opts);
 }

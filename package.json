@@ -5,8 +5,12 @@
   "main": "index.js",
   "browserify": {
     "transform": [
+      "hbsfy",
       "brfs"
     ]
+  },
+  "browser": {
+    "./lib/svg-template.js": "./lib/svg-client-template.js"
   },
   "bin": {
     "flamegraph": "bin/flamegraph.js"
@@ -24,8 +28,9 @@
   },
   "homepage": "https://github.com/thlorenz/flamegraph",
   "dependencies": {
-    "brfs": "^1.0.2",
+    "brfs": "~1.0.2",
     "handlebars": "~2.0.0-alpha.4",
+    "hbsfy": "~2.0.0",
     "minimist": "~0.2.0",
     "readable-stream": "~1.0.27-1",
     "split2": "~0.1.2",

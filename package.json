@@ -16,6 +16,7 @@
     "flamegraph": "bin/flamegraph.js"
   },
   "scripts": {
+    "docme": "docme README.md -- --configure .jsdocrc",
     "test-main": "set -e; for t in test/*.js; do node $t; done",
     "test-0.10": "nave use 0.10 npm run test-main",
     "test-0.11": "nave use 0.11 npm run test-main",

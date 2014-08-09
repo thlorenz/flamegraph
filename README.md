@@ -61,7 +61,7 @@ EXAMPLE:
 </div>
 <dl>
 <dt>
-<h4 class="name" id="flamegraph"><span class="type-signature"></span>flamegraph<span class="signature">(stream, opts)</span><span class="type-signature"></span></h4>
+<h4 class="name" id="flamegraph"><span class="type-signature"></span>flamegraph<span class="signature">(stream, opts)</span><span class="type-signature"> &rarr; {ReadableStream}</span></h4>
 </dt>
 <dd>
 <div class="description">
@@ -96,7 +96,6 @@ EXAMPLE:
 <tr>
 <th>Name</th>
 <th>Type</th>
-<th>Argument</th>
 <th class="last">Description</th>
 </tr>
 </thead>
@@ -106,8 +105,6 @@ EXAMPLE:
 <td class="type">
 <span class="param-type">string</span>
 </td>
-<td class="attributes">
-</td>
 <td class="description last"><p>the type of callgraph <code>instruments |</code></p></td>
 </tr>
 <tr>
@@ -115,18 +112,12 @@ EXAMPLE:
 <td class="type">
 <span class="param-type">string</span>
 </td>
-<td class="attributes">
-&lt;optional><br>
-</td>
-<td class="description last"><p>default: <code>'Verdana'</code></p></td>
+<td class="description last"><p>type of font to use               default: <code>'Verdana'</code></p></td>
 </tr>
 <tr>
 <td class="name"><code>fontsize</code></td>
 <td class="type">
 <span class="param-type">number</span>
-</td>
-<td class="attributes">
-&lt;optional><br>
 </td>
 <td class="description last"><p>base text size                    default: <code>12</code></p></td>
 </tr>
@@ -135,18 +126,12 @@ EXAMPLE:
 <td class="type">
 <span class="param-type">number</span>
 </td>
-<td class="attributes">
-&lt;optional><br>
-</td>
 <td class="description last"><p>max width, pixels                 default: <code>1200</code></p></td>
 </tr>
 <tr>
 <td class="name"><code>frameheight</code></td>
 <td class="type">
 <span class="param-type">number</span>
-</td>
-<td class="attributes">
-&lt;optional><br>
 </td>
 <td class="description last"><p>max height is dynamic             default: <code>16.0</code></p></td>
 </tr>
@@ -155,18 +140,12 @@ EXAMPLE:
 <td class="type">
 <span class="param-type">number</span>
 </td>
-<td class="attributes">
-&lt;optional><br>
-</td>
 <td class="description last"><p>avg width relative to fontsize    default: <code>0.59</code></p></td>
 </tr>
 <tr>
 <td class="name"><code>minwidth</code></td>
 <td class="type">
 <span class="param-type">number</span>
-</td>
-<td class="attributes">
-&lt;optional><br>
 </td>
 <td class="description last"><p>min function width, pixels        default: <code>0.1</code></p></td>
 </tr>
@@ -175,18 +154,12 @@ EXAMPLE:
 <td class="type">
 <span class="param-type">string</span>
 </td>
-<td class="attributes">
-&lt;optional><br>
-</td>
 <td class="description last"><p>what are the counts in the data?  default: <code>'samples'</code></p></td>
 </tr>
 <tr>
 <td class="name"><code>colors</code></td>
 <td class="type">
 <span class="param-type">string</span>
-</td>
-<td class="attributes">
-&lt;optional><br>
 </td>
 <td class="description last"><p>color theme                       default: <code>'hot'</code></p></td>
 </tr>
@@ -195,18 +168,12 @@ EXAMPLE:
 <td class="type">
 <span class="param-type">string</span>
 </td>
-<td class="attributes">
-&lt;optional><br>
-</td>
 <td class="description last"><p>background color gradient start   default: <code>'#eeeeee'</code></p></td>
 </tr>
 <tr>
 <td class="name"><code>bgcolor2</code></td>
 <td class="type">
 <span class="param-type">string</span>
-</td>
-<td class="attributes">
-&lt;optional><br>
 </td>
 <td class="description last"><p>background color gradient stop    default: <code>'#eeeeb0'</code></p></td>
 </tr>
@@ -215,18 +182,12 @@ EXAMPLE:
 <td class="type">
 <span class="param-type">number</span>
 </td>
-<td class="attributes">
-&lt;optional><br>
-</td>
 <td class="description last"><p>(override the) sum of the counts  default: <code>Infinity</code></p></td>
 </tr>
 <tr>
 <td class="name"><code>factor</code></td>
 <td class="type">
 <span class="param-type">number</span>
-</td>
-<td class="attributes">
-&lt;optional><br>
 </td>
 <td class="description last"><p>factor to scale counts by         default: <code>1</code></p></td>
 </tr>
@@ -235,9 +196,6 @@ EXAMPLE:
 <td class="type">
 <span class="param-type">boolean</span>
 </td>
-<td class="attributes">
-&lt;optional><br>
-</td>
 <td class="description last"><p>color by function name            default: <code>true</code></p></td>
 </tr>
 <tr>
@@ -245,18 +203,12 @@ EXAMPLE:
 <td class="type">
 <span class="param-type">string</span>
 </td>
-<td class="attributes">
-&lt;optional><br>
-</td>
 <td class="description last"><p>centered heading                  default: <code>'Flame Graph'</code></p></td>
 </tr>
 <tr>
 <td class="name"><code>nametype</code></td>
 <td class="type">
 <span class="param-type">string</span>
-</td>
-<td class="attributes">
-&lt;optional><br>
 </td>
 <td class="description last"><p>what are the names in the data?   default: <code>'Function:'</code></p></td>
 </tr>
@@ -270,27 +222,114 @@ EXAMPLE:
 <dt class="tag-source">Source:</dt>
 <dd class="tag-source"><ul class="dummy">
 <li>
-<a href="https://github.com/thlorenz/flamegraphs/blob/master/index.js">index.js</a>
+<a href="https://github.com/thlorenz/flamegraph/blob/master/index.js">index.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/flamegraphs/blob/master/index.js#L11">lineno 11</a>
+<a href="https://github.com/thlorenz/flamegraph/blob/master/index.js#L8">lineno 8</a>
 </li>
 </ul></dd>
 </dl>
+<h5>Returns:</h5>
+<div class="param-desc">
+<p>svg stream</p>
+</div>
+<dl>
+<dt>
+Type
+</dt>
+<dd>
+<span class="param-type">ReadableStream</span>
+</dd>
+</dl>
 </dd>
 <dt>
-<h4 class="name" id="flamegraph::stackCollapseInstruments"><span class="type-signature"></span>flamegraph::stackCollapseInstruments<span class="signature">()</span><span class="type-signature"> &rarr; {TransformStream}</span></h4>
+<h4 class="name" id="flamegraph::fromArray"><span class="type-signature"></span>flamegraph::fromArray<span class="signature">(arr, opts)</span><span class="type-signature"> &rarr; {string}</span></h4>
 </dt>
 <dd>
 <div class="description">
-<p>Collapses a callgraph inside an Instruments generated <code>.csv</code> file line by line.</p>
+<p>Converts an array of call graph lines into an svg document.</p>
 </div>
+<h5>Parameters:</h5>
+<table class="params">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th class="last">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="name"><code>arr</code></td>
+<td class="type">
+<span class="param-type">Array.&lt;string></span>
+</td>
+<td class="description last"><p>lines to collapse</p></td>
+</tr>
+<tr>
+<td class="name"><code>opts</code></td>
+<td class="type">
+<span class="param-type">Object</span>
+</td>
+<td class="description last"><p>same as <code>flamegraph</code> function except that <code>inputtype</code> is detected if not given</p></td>
+</tr>
+</tbody>
+</table>
 <dl class="details">
 <dt class="tag-source">Source:</dt>
 <dd class="tag-source"><ul class="dummy">
 <li>
-<a href="https://github.com/thlorenz/flamegraphs/blob/master/lib/stackcollapse-instruments.js">lib/stackcollapse-instruments.js</a>
+<a href="https://github.com/thlorenz/flamegraph/blob/master/index.js">index.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/flamegraphs/blob/master/lib/stackcollapse-instruments.js#L29">lineno 29</a>
+<a href="https://github.com/thlorenz/flamegraph/blob/master/index.js#L84">lineno 84</a>
+</li>
+</ul></dd>
+</dl>
+<h5>Returns:</h5>
+<div class="param-desc">
+<p>svg</p>
+</div>
+<dl>
+<dt>
+Type
+</dt>
+<dd>
+<span class="param-type">string</span>
+</dd>
+</dl>
+</dd>
+<dt>
+<h4 class="name" id="flamegraph::stackCollapse"><span class="type-signature"></span>flamegraph::stackCollapse<span class="signature">(type)</span><span class="type-signature"> &rarr; {TransformStream}</span></h4>
+</dt>
+<dd>
+<div class="description">
+<p>Collapses a callgraph inside a given file line by line.</p>
+</div>
+<h5>Parameters:</h5>
+<table class="params">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th class="last">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="name"><code>type</code></td>
+<td class="type">
+<span class="param-type">string</span>
+</td>
+<td class="description last"><p>the type of input to collapse</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="details">
+<dt class="tag-source">Source:</dt>
+<dd class="tag-source"><ul class="dummy">
+<li>
+<a href="https://github.com/thlorenz/flamegraph/blob/master/lib/stackcollapse.js">lib/stackcollapse.js</a>
+<span>, </span>
+<a href="https://github.com/thlorenz/flamegraph/blob/master/lib/stackcollapse.js#L18">lineno 18</a>
 </li>
 </ul></dd>
 </dl>
@@ -304,6 +343,62 @@ Type
 </dt>
 <dd>
 <span class="param-type">TransformStream</span>
+</dd>
+</dl>
+</dd>
+<dt>
+<h4 class="name" id="flamegraph::stackCollapseFromArray"><span class="type-signature"></span>flamegraph::stackCollapseFromArray<span class="signature">(type, arr)</span><span class="type-signature"> &rarr; {Array.&lt;string>}</span></h4>
+</dt>
+<dd>
+<div class="description">
+<p>Collapses a callgraph inside a given lines array line by line.</p>
+</div>
+<h5>Parameters:</h5>
+<table class="params">
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th class="last">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="name"><code>type</code></td>
+<td class="type">
+<span class="param-type">string</span>
+</td>
+<td class="description last"><p>the type of input to collapse (if not supplied it is detected from the input)</p></td>
+</tr>
+<tr>
+<td class="name"><code>arr</code></td>
+<td class="type">
+<span class="param-type">Array.&lt;string></span>
+</td>
+<td class="description last"><p>lines to collapse</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="details">
+<dt class="tag-source">Source:</dt>
+<dd class="tag-source"><ul class="dummy">
+<li>
+<a href="https://github.com/thlorenz/flamegraph/blob/master/index.js">index.js</a>
+<span>, </span>
+<a href="https://github.com/thlorenz/flamegraph/blob/master/index.js#L102">lineno 102</a>
+</li>
+</ul></dd>
+</dl>
+<h5>Returns:</h5>
+<div class="param-desc">
+<p>array of collapsed lines</p>
+</div>
+<dl>
+<dt>
+Type
+</dt>
+<dd>
+<span class="param-type">Array.&lt;string></span>
 </dd>
 </dl>
 </dd>
@@ -344,9 +439,9 @@ Type
 <dt class="tag-source">Source:</dt>
 <dd class="tag-source"><ul class="dummy">
 <li>
-<a href="https://github.com/thlorenz/flamegraphs/blob/master/lib/svg.js">lib/svg.js</a>
+<a href="https://github.com/thlorenz/flamegraph/blob/master/lib/svg.js">lib/svg.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/flamegraphs/blob/master/lib/svg.js#L11">lineno 11</a>
+<a href="https://github.com/thlorenz/flamegraph/blob/master/lib/svg.js#L11">lineno 11</a>
 </li>
 </ul></dd>
 </dl>

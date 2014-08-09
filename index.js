@@ -1,6 +1,8 @@
 'use strict';
 
-var through = require('through2');
+var through = require('through2')
+  , detectInputType = require('./lib/detect-inputtype')
+  , streamify = require('stream-array')
 
 function inspect(obj, depth) {
   console.error(require('util').inspect(obj, false, depth || 5, true));
@@ -33,14 +35,22 @@ exports = module.exports =
  * @param {string=} opts.nametype    what are the names in the data?   default: `'Function:'`
  */
 function flamegraph(stream, opts) {
-  var collapse;
+  var pt = new through();
 
-  switch(opts.inputtype) {
-    case 'instruments':
-      collapse = exports.stackCollapseInstruments
-      break;
-    default:
-      throw new Error('Unsupported input type ' + opts.inputtype);
+  var inputType = opts.inputtype;
+  if (!inputType) {
+    // If no input type was given we need to detect it which means:
+    // - first converting into an array in order to detect, i.e. by first ine
+    // - second collapse and generate svg
+    // - third convert back to a stream since that is what the API dictates
+    //
+    // Possible improvement: if all detectors can work with just the first line we may optimize this:
+    // - keep it streaming and use first line for detector
+    // - push data back (http://nodejs.org/api/stream.html#stream_readable_unshift_chunk)
+    // - pipe stream into collapser
+    var arr = exports.flamegraphFromArray();
+    // TODO:
+    return pt;
   }
 
   var chunks = [];
@@ -67,7 +77,7 @@ function flamegraph(stream, opts) {
   // So a little less nice API, but at least it works
   var out = stream
     .on('error', function(err) { out.emit('error', err) })
-    .pipe(collapse())
+    .pipe(exports.stackCollapse())
     .on('error', function(err) { out.emit('error', err) })
     .pipe(through(onread, onflush))
 
@@ -75,8 +85,19 @@ function flamegraph(stream, opts) {
 }
 
 exports.svg = require('./lib/svg');
-exports.stackCollapseInstruments = require('./lib/stackcollapse-instruments')
+exports.stackCollapse = require('./lib/stackcollapse')
 
+exports.stackCollpaseFromArray = function stackCollpaseFromArray (arr, inputType) {
+  inputType = inputType || detectInputType(arr);
+  if (!inputType) throw new Error('No input type given and unable to detect it for the given input!');
+
+  return exports.stackCollapse.array(inputType, arr);
+}
+
+exports.flamegraphFromArray = function flamegraphFromArray (arr, opts) {
+  var collapsed = exports.stackCollapseFromArray(arr, opts.inputtype);
+  return exports.svg(collapsed, opts);
+}
 
 // Test
 if (!module.parent && typeof window === 'undefined') {

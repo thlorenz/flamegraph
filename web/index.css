@@ -5,3 +5,55 @@
 #flamegraph {
   margin: 10px;
 }
+
+.button {
+  border-radius: 2px;
+  box-shadow: inset rgba(255,255,255,0.3) 1px 1px 0;
+}
+  
+.button:active {
+  box-shadow: inset rgba(0,0,0,0.4) 0px 0px 6px;
+}
+
+.rounded {
+  border-radius: 5px;
+}
+
+.red {
+  background: #e25b53;
+  background: -moz-linear-gradient(top,  #e25b53 0%, #dd2011 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#e25b53), color-stop(100%,#dd2011));
+  background: -webkit-linear-gradient(top,  #e25b53 0%,#dd2011 100%);
+  background: -o-linear-gradient(top,  #e25b53 0%,#dd2011 100%);
+  background: -ms-linear-gradient(top,  #e25b53 0%,#dd2011 100%);
+  background: linear-gradient(to bottom,  #e25b53 0%,#dd2011 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e25b53', endColorstr='#dd2011',GradientType=0 );
+  border: 1px solid #c42222;
+}
+
+.red:hover {
+  background: #dd7671;
+  background: -moz-linear-gradient(top,  #dd7671 0%, #dd2011 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#dd7671), color-stop(100%,#dd2011));
+  background: -webkit-linear-gradient(top,  #dd7671 0%,#dd2011 100%);
+  background: -o-linear-gradient(top,  #dd7671 0%,#dd2011 100%);
+  background: -ms-linear-gradient(top,  #dd7671 0%,#dd2011 100%);
+  background: linear-gradient(to bottom,  #dd7671 0%,#dd2011 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dd7671', endColorstr='#dd2011',GradientType=0 );
+}
+
+#inputfile-button {
+  float: left;
+  margin-left: -44px;
+  margin-top: -3px;
+  margin-bottom: 10px;
+  width: 85px;
+  cursor: pointer;
+  height: 30px;
+}
+
+#inputfile {
+  float: left;
+  margin-right: -200px;
+  margin-left: 20px;
+}

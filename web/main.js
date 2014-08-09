@@ -1,6 +1,8 @@
 'use strict';
 var flamegraph = require('flamegraph');
 var flamegraphEl = document.getElementById('flamegraph');
+var inputfileEl = document.getElementById('inputfile')
+var inputfileButtonEl = document.getElementById('inputfile-button')
 
 function hookHoverMethods() {
   var details = document.getElementById("details").firstChild;
@@ -32,6 +34,8 @@ function onFile(e) {
   });
 }
 
-document
-  .getElementById('inputfile')
-  .addEventListener('change', onFile);
+inputfileEl.addEventListener('change', onFile);
+inputfileButtonEl.onclick = function () {
+  console.log('clicking');
+  inputfileEl.click();
+}

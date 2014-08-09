@@ -1,0 +1,18 @@
+{
+  "name": "flamegraph-web",
+  "version": "0.0.0",
+  "description": "Demoing how flamegraph can be used in a webpage",
+  "main": "main.js",
+  "scripts": {
+    "start": "watchify -d main.js -o bundle.js"
+  },
+  "dependencies": {
+    "flamegraph": "^0.1.0",
+    "stream-array": "^0.1.3"
+  },
+  "devDependencies": {
+    "watchify": "^1.0.1"
+  },
+  "author": "",
+  "license": "ISC"
+}

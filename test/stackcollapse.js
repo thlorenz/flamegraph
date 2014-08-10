@@ -5,6 +5,10 @@ var test = require('tape')
   , path = require('path')
   , fs = require('fs')
 
+function inspect(obj, depth) {
+  console.error(require('util').inspect(obj, false, depth || 5, true));
+}
+
 function nonEmpty(line) {
   return line && line.length;
 }
@@ -24,7 +28,7 @@ function run(type, name, csv, folded) {
       t.equal(actual.length, expected.length, 'have same number of lines')
       t.deepEqual(actual, expected, 'generates same folded content as original perl script')
     } catch (err) {
-       t.fail(err);
+      t.fail(err);
     }
     t.end()
   })

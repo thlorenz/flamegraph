@@ -55,3 +55,8 @@
   margin-right: -200px;
   margin-left: 20px;
 }
+
+.options-input {
+  min-width: 200px;
+  float: left;
+}

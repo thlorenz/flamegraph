@@ -116,3 +116,5 @@ function stackCollpaseFromArray (arr, inputType) {
 }
 
 exports.svg = require('./lib/svg');
+exports.defaultOpts = require('./lib/default-opts');
+exports.defaultOptsMeta = require('./lib/default-opts-meta');

@@ -1,16 +1,20 @@
 'use strict';
 
-var through = require('through2')
-  , detectInputType = require('./lib/detect-inputtype')
+var detectInputType = require('./lib/detect-inputtype')
+  , stackCollapse   = require('./lib/stackcollapse')
+  , svg             = require('./lib/svg')
+  , defaultOpts     = require('./lib/default-opts')
+  , defaultOptsMeta = require('./lib/default-opts-meta');
 
 exports = module.exports =
 
 /**
- * Converts a stream of call graph lines into an svg document.
+ * Converts an array of call graph lines into an svg document.
+ * If `opts.inputtype` is not given it will be detected from the input.
  *
  * @name flamegraph
  * @function
- * @param {ReadableStream} stream that will emit the call graph lines to be parsed
+ * @param {Array.<string>} arr      input lines to render svg for
  * @param {Object} opts objects that affect the visualization
  * @param {string} opts.inputtype   the type of callgraph `instruments | `
  * @param {string} opts.fonttype    type of font to use               default: `'Verdana'`
@@ -28,76 +32,17 @@ exports = module.exports =
  * @param {boolean} opts.hash       color by function name            default: `true`
  * @param {string} opts.titletext   centered heading                  default: `'Flame Graph'`
  * @param {string} opts.nametype    what are the names in the data?   default: `'Function:'`
- * @return {ReadableStream} svg stream
+ * @return {string} svg             the rendered svg
  */
-function flamegraph(stream, opts) {
+function flamegraph(arr, opts) {
+  if (!Array.isArray(arr)) throw new TypeError('First arg needs to be an array of lines.');
+
   opts = opts || {};
-
-  var inputType = opts.inputtype;
-  if (!inputType) {
-    throw new Error('When using the streaming interface, the input type is required');
-    // If no input type was given we need to detect it which means:
-    // - first converting into an array in order to detect, i.e. by first ine
-    // - second collapse and generate svg
-    // - third convert back to a stream since that is what the API dictates
-    
-    // Possible improvement: if all detectors can work with just the first line we may optimize this:
-    // - keep it streaming and use first line for detector
-    // - push data back (http://nodejs.org/api/stream.html#stream_readable_unshift_chunk)
-    // - pipe stream into collapser
-
-  }
-
-  var chunks = [];
-
-  function onread (chunk, enc, cb) {
-    chunks.push(chunk);
-    cb();
-  }
-
-  function onflush(cb) {
-    var lines = Buffer.concat(chunks).toString().split('\n')
-      , svg;
-    try {
-      svg = exports.svg(lines, opts)
-    } catch (err) {
-      return cb(err);
-    }
-    this.push(svg);
-    cb();
-  }
-
-  // Need to take stream as input here, I have not found a way to make this work and allow
-  // `stream.pipe(flamegraph('instruments')).pipe(stdout)` instead.
-  // So a little less nice API, but at least it works
-  var out = stream
-    .on('error', function(err) { out.emit('error', err) })
-    .pipe(exports.stackCollapse())
-    .on('error', function(err) { out.emit('error', err) })
-    .pipe(through(onread, onflush))
-
-  return out;
+  var collapsed = stackCollapseFromArray(arr, opts.inputtype);
+  return svg(collapsed, opts);
 }
 
-exports.fromArray = 
-
-/**
- * Converts an array of call graph lines into an svg document.
- *
- * @name flamegraph::fromArray
- * @function
- * @param {Array.<string>} arr lines to collapse
- * @param {Object} opts same as `flamegraph` function except that `inputtype` is detected if not given 
- * @return {string} svg
- */
-function fromArray (arr, opts) {
-  opts = opts || {};
-  var collapsed = exports.stackCollapseFromArray(arr, opts.inputtype);
-  return exports.svg(collapsed, opts);
-}
-
-exports.stackCollapse = require('./lib/stackcollapse')
-exports.stackCollapseFromArray = 
+var stackCollapseFromArray = exports.stackCollapseFromArray = 
 
 /**
  * Collapses a callgraph inside a given lines array line by line.
@@ -109,12 +54,15 @@ exports.stackCollapseFromArray =
  * @return {Array.<string>} array of collapsed lines
  */
 function stackCollpaseFromArray (arr, inputType) {
+  if (!Array.isArray(arr)) throw new TypeError('First arg needs to be an array of lines.');
+
   inputType = inputType || detectInputType(arr);
   if (!inputType) throw new Error('No input type given and unable to detect it for the given input!');
 
-  return exports.stackCollapse.array(inputType, arr);
+  return stackCollapse(inputType, arr);
 }
 
-exports.svg = require('./lib/svg');
-exports.defaultOpts = require('./lib/default-opts');
-exports.defaultOptsMeta = require('./lib/default-opts-meta');
+exports.stackCollapse   = stackCollapse;
+exports.svg             = svg;
+exports.defaultOpts     = defaultOpts;
+exports.defaultOptsMeta = defaultOptsMeta;

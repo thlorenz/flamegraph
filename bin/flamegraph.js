@@ -2,7 +2,7 @@
 'use strict';
 
 var minimist =  require('minimist')
-  , flamegraph = require('../')
+  , flamegraphFromStream = require('../from-stream')
   , path = require('path')
   , fs = require('fs');
 
@@ -26,7 +26,5 @@ function inspect(obj, depth) {
 
 if (argv.h || argv.help) return usage();
 
-flamegraph(process.stdin, argv)
-  .pipe(process.stdout);
-
+flamegraphFromStream(process.stdin, argv).pipe(process.stdout)
 })()

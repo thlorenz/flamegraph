@@ -4,7 +4,7 @@ Generates a flamegraph from the callgraph data of the given `inputtype` that is 
 
 OPTIONS:
 
-  --inputtype -t  the type of callgraph (only 'instruments' supported at this point)
+  --inputtype -t  the type of callgraph 'instruments | perf'
 
   --fonttype      font family used                  default: 'Verdana'
   --fontsize      base text size                    default: 12

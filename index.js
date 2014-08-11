@@ -16,7 +16,7 @@ exports = module.exports =
  * @function
  * @param {Array.<string>} arr      input lines to render svg for
  * @param {Object} opts objects that affect the visualization
- * @param {string} opts.inputtype   the type of callgraph `instruments | `
+ * @param {string} opts.inputtype   the type of callgraph `instruments | perf`
  * @param {string} opts.fonttype    type of font to use               default: `'Verdana'`
  * @param {number} opts.fontsize    base text size                    default: `12`
  * @param {number} opts.imagewidth  max width, pixels                 default: `1200`

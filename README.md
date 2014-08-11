@@ -248,7 +248,7 @@ Type
 </dl>
 </dd>
 <dt>
-<h4 class="name" id="flamegraph::fromStream"><span class="type-signature"></span>flamegraph::fromStream<span class="signature">(stream, opts, cb)</span><span class="type-signature"></span></h4>
+<h4 class="name" id="flamegraph::fromStream"><span class="type-signature"></span>flamegraph::fromStream<span class="signature">(stream, opts)</span><span class="type-signature"> &rarr; {ReadableStream}</span></h4>
 </dt>
 <dd>
 <div class="description">
@@ -256,7 +256,7 @@ Type
 Not truly streaming, concats all lines before processing.</p>
 <p><strong>Example</strong>:</p>
 <pre><code class="lang-js">var fromStream = require('flamegraph/from-stream');
-fromStream(process.stdin, outs).pipe(process.stdout);</code></pre>
+fromStream(process.stdin, opts).pipe(process.stdout);</code></pre>
 </div>
 <h5>Parameters:</h5>
 <table class="params">
@@ -282,13 +282,6 @@ fromStream(process.stdin, outs).pipe(process.stdout);</code></pre>
 </td>
 <td class="description last"><p>same as <code>flamegraph</code></p></td>
 </tr>
-<tr>
-<td class="name"><code>cb</code></td>
-<td class="type">
-<span class="param-type">function</span>
-</td>
-<td class="description last"><p>called back with the generated svg document</p></td>
-</tr>
 </tbody>
 </table>
 <dl class="details">
@@ -300,6 +293,18 @@ fromStream(process.stdin, outs).pipe(process.stdout);</code></pre>
 <a href="https://github.com/thlorenz/flamegraph/blob/master/from-stream.js#L12">lineno 12</a>
 </li>
 </ul></dd>
+</dl>
+<h5>Returns:</h5>
+<div class="param-desc">
+<p>stream that emits the lines of generated svg</p>
+</div>
+<dl>
+<dt>
+Type
+</dt>
+<dd>
+<span class="param-type">ReadableStream</span>
+</dd>
 </dl>
 </dd>
 <dt>

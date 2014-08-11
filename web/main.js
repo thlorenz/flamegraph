@@ -74,7 +74,7 @@ function onFile(e) {
     var svg;
     try {
       svg = flamegraph(arr, opts);
-     flamegraphEl.innerHTML= svg;
+      flamegraphEl.innerHTML= svg;
      hookHoverMethods();
     } catch (err) {
       flamegraphEl.innerHTML = '<br><p class="error">' + err.toString() + '</p>';
@@ -87,4 +87,4 @@ inputfileButtonEl.onclick = function () {
   inputfileEl.click();
 }
 
-//renderOptions();
+renderOptions();

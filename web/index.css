@@ -57,6 +57,6 @@
 }
 
 .options-input {
-  min-width: 200px;
-  float: left;
+  min-width: 150px;
+  display: inline-block;
 }

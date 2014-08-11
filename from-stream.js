@@ -17,14 +17,14 @@ module.exports =
  *
  * ```js
  * var fromStream = require('flamegraph/from-stream');
- * fromStream(process.stdin, outs).pipe(process.stdout);
+ * fromStream(process.stdin, opts).pipe(process.stdout);
  * ```
  *
  * @name flamegraph::fromStream
  * @function
  * @param {ReadableStream} stream that will emit the call graph lines to be parsed
  * @param {Object} opts same as `flamegraph` 
- * @param {function} cb called back with the generated svg document
+ * @return {ReadableStream} stream that emits the lines of generated svg
  */
 function fromStream(stream, opts) {
   opts = opts || {};

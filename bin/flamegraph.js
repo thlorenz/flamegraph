@@ -12,8 +12,6 @@ function usage() {
   return;
 }
 
-(function() {
-
 var argv = minimist(process.argv.slice(2)
   , { boolean: [ 'h', 'help' ] 
     , string: [ 't', 'inputtype' ]
@@ -27,4 +25,3 @@ function inspect(obj, depth) {
 if (argv.h || argv.help) return usage();
 
 flamegraphFromStream(process.stdin, argv).pipe(process.stdout)
-})()

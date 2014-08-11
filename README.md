@@ -21,7 +21,7 @@ Generates a flamegraph from the callgraph data of the given `inputtype` that is 
 
 OPTIONS:
 
-  --inputtype -t  the type of callgraph (only 'instruments' supported at this point)
+  --inputtype -t  the type of callgraph 'instruments | perf'
 
   --fonttype      font family used                  default: 'Verdana'
   --fontsize      base text size                    default: 12
@@ -46,6 +46,11 @@ EXAMPLE:
   cat instruments-callgraph.csv | flamegraph -t instruments > flamegraph.svg
 ```
 
+The input data needs to be generated as follows:
+
+- [use perf on linux](https://github.com/thlorenz/flamegraph/blob/master/generate-perf-data.md)
+- [use instruments on mac](https://github.com/thlorenz/flamegraph/blob/master/web/img/instruments.gif)
+
 ## API
 
 <!-- START docme generated API please keep comment here to allow auto update -->
@@ -61,11 +66,12 @@ EXAMPLE:
 </div>
 <dl>
 <dt>
-<h4 class="name" id="flamegraph"><span class="type-signature"></span>flamegraph<span class="signature">(stream, opts)</span><span class="type-signature"> &rarr; {ReadableStream}</span></h4>
+<h4 class="name" id="flamegraph"><span class="type-signature"></span>flamegraph<span class="signature">(arr, opts)</span><span class="type-signature"> &rarr; {string}</span></h4>
 </dt>
 <dd>
 <div class="description">
-<p>Converts a stream of call graph lines into an svg document.</p>
+<p>Converts an array of call graph lines into an svg document.
+If <code>opts.inputtype</code> is not given it will be detected from the input.</p>
 </div>
 <h5>Parameters:</h5>
 <table class="params">
@@ -78,11 +84,11 @@ EXAMPLE:
 </thead>
 <tbody>
 <tr>
-<td class="name"><code>stream</code></td>
+<td class="name"><code>arr</code></td>
 <td class="type">
-<span class="param-type">ReadableStream</span>
+<span class="param-type">Array.&lt;string></span>
 </td>
-<td class="description last"><p>that will emit the call graph lines to be parsed</p></td>
+<td class="description last"><p>input lines to render svg for</p></td>
 </tr>
 <tr>
 <td class="name"><code>opts</code></td>
@@ -105,7 +111,7 @@ EXAMPLE:
 <td class="type">
 <span class="param-type">string</span>
 </td>
-<td class="description last"><p>the type of callgraph <code>instruments |</code></p></td>
+<td class="description last"><p>the type of callgraph <code>instruments | perf</code></p></td>
 </tr>
 <tr>
 <td class="name"><code>fonttype</code></td>
@@ -224,29 +230,33 @@ EXAMPLE:
 <li>
 <a href="https://github.com/thlorenz/flamegraph/blob/master/index.js">index.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/flamegraph/blob/master/index.js#L8">lineno 8</a>
+<a href="https://github.com/thlorenz/flamegraph/blob/master/index.js#L11">lineno 11</a>
 </li>
 </ul></dd>
 </dl>
 <h5>Returns:</h5>
 <div class="param-desc">
-<p>svg stream</p>
+<p>svg             the rendered svg</p>
 </div>
 <dl>
 <dt>
 Type
 </dt>
 <dd>
-<span class="param-type">ReadableStream</span>
+<span class="param-type">string</span>
 </dd>
 </dl>
 </dd>
 <dt>
-<h4 class="name" id="flamegraph::fromArray"><span class="type-signature"></span>flamegraph::fromArray<span class="signature">(arr, opts)</span><span class="type-signature"> &rarr; {string}</span></h4>
+<h4 class="name" id="flamegraph::fromStream"><span class="type-signature"></span>flamegraph::fromStream<span class="signature">(stream, opts, cb)</span><span class="type-signature"></span></h4>
 </dt>
 <dd>
 <div class="description">
-<p>Converts an array of call graph lines into an svg document.</p>
+<p>Converts a stream of call graph lines into an svg document.
+Not truly streaming, concats all lines before processing.</p>
+<p><strong>Example</strong>:</p>
+<pre><code class="lang-js">var fromStream = require('flamegraph/from-stream');
+fromStream(process.stdin, outs).pipe(process.stdout);</code></pre>
 </div>
 <h5>Parameters:</h5>
 <table class="params">
@@ -259,67 +269,25 @@ Type
 </thead>
 <tbody>
 <tr>
-<td class="name"><code>arr</code></td>
+<td class="name"><code>stream</code></td>
 <td class="type">
-<span class="param-type">Array.&lt;string></span>
+<span class="param-type">ReadableStream</span>
 </td>
-<td class="description last"><p>lines to collapse</p></td>
+<td class="description last"><p>that will emit the call graph lines to be parsed</p></td>
 </tr>
 <tr>
 <td class="name"><code>opts</code></td>
 <td class="type">
 <span class="param-type">Object</span>
 </td>
-<td class="description last"><p>same as <code>flamegraph</code> function except that <code>inputtype</code> is detected if not given</p></td>
+<td class="description last"><p>same as <code>flamegraph</code></p></td>
 </tr>
-</tbody>
-</table>
-<dl class="details">
-<dt class="tag-source">Source:</dt>
-<dd class="tag-source"><ul class="dummy">
-<li>
-<a href="https://github.com/thlorenz/flamegraph/blob/master/index.js">index.js</a>
-<span>, </span>
-<a href="https://github.com/thlorenz/flamegraph/blob/master/index.js#L84">lineno 84</a>
-</li>
-</ul></dd>
-</dl>
-<h5>Returns:</h5>
-<div class="param-desc">
-<p>svg</p>
-</div>
-<dl>
-<dt>
-Type
-</dt>
-<dd>
-<span class="param-type">string</span>
-</dd>
-</dl>
-</dd>
-<dt>
-<h4 class="name" id="flamegraph::stackCollapse"><span class="type-signature"></span>flamegraph::stackCollapse<span class="signature">(type)</span><span class="type-signature"> &rarr; {TransformStream}</span></h4>
-</dt>
-<dd>
-<div class="description">
-<p>Collapses a callgraph inside a given file line by line.</p>
-</div>
-<h5>Parameters:</h5>
-<table class="params">
-<thead>
 <tr>
-<th>Name</th>
-<th>Type</th>
-<th class="last">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="name"><code>type</code></td>
+<td class="name"><code>cb</code></td>
 <td class="type">
-<span class="param-type">string</span>
+<span class="param-type">function</span>
 </td>
-<td class="description last"><p>the type of input to collapse</p></td>
+<td class="description last"><p>called back with the generated svg document</p></td>
 </tr>
 </tbody>
 </table>
@@ -327,23 +295,11 @@ Type
 <dt class="tag-source">Source:</dt>
 <dd class="tag-source"><ul class="dummy">
 <li>
-<a href="https://github.com/thlorenz/flamegraph/blob/master/lib/stackcollapse.js">lib/stackcollapse.js</a>
+<a href="https://github.com/thlorenz/flamegraph/blob/master/from-stream.js">from-stream.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/flamegraph/blob/master/lib/stackcollapse.js#L18">lineno 18</a>
+<a href="https://github.com/thlorenz/flamegraph/blob/master/from-stream.js#L12">lineno 12</a>
 </li>
 </ul></dd>
-</dl>
-<h5>Returns:</h5>
-<div class="param-desc">
-<p>stream into which to pipe the lines of the <code>.csv</code> file</p>
-</div>
-<dl>
-<dt>
-Type
-</dt>
-<dd>
-<span class="param-type">TransformStream</span>
-</dd>
 </dl>
 </dd>
 <dt>
@@ -385,7 +341,7 @@ Type
 <li>
 <a href="https://github.com/thlorenz/flamegraph/blob/master/index.js">index.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/flamegraph/blob/master/index.js#L102">lineno 102</a>
+<a href="https://github.com/thlorenz/flamegraph/blob/master/index.js#L47">lineno 47</a>
 </li>
 </ul></dd>
 </dl>

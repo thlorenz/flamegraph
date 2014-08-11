@@ -70,10 +70,10 @@ function onFile(e) {
   if (!file) return;
   readFile(file, function (e) {
     var arr = e.target.result.split('\n');
-    var opts = getOptions();
+    var opts = {} //getOptions();
     var svg;
     try {
-      svg = flamegraph.fromArray(arr, opts);
+      svg = flamegraph(arr, opts);
      flamegraphEl.innerHTML= svg;
      hookHoverMethods();
     } catch (err) {
@@ -87,4 +87,4 @@ inputfileButtonEl.onclick = function () {
   inputfileEl.click();
 }
 
-renderOptions();
+//renderOptions();

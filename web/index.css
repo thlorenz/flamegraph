@@ -60,3 +60,7 @@
   min-width: 150px;
   display: inline-block;
 }
+
+.hidden {
+  display: none;  
+}

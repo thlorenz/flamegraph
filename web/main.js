@@ -5,18 +5,24 @@ var optsTemplate = require('./opts-template.hbs');
 var flamegraphEl = document.getElementById('flamegraph');
 var inputfileEl = document.getElementById('inputfile')
 var inputfileButtonEl = document.getElementById('inputfile-button')
+var refreshButtonEl = document.getElementById('refresh-button')
 var optionsEl = document.getElementById('options');
+var currentFolded;
 
 function renderOptions() {
   var opts = flamegraph.defaultOpts
     , meta = flamegraph.defaultOptsMeta;
 
+  console.dir(opts);
   var context = Object.keys(meta)
     .reduce(function (acc, k) {
+      var type = meta[k].type;
+      if (type === 'boolean') type = 'checkbox';
+      if (type === 'string') type = 'text';
       return acc.concat({
           name         : k
         , value        : opts[k]
-        , type         : meta[k].type
+        , type         : type 
         , description : meta[k].description
       });
     }, []);
@@ -30,6 +36,8 @@ function renderOptions() {
       var el = document.getElementById(k);
       el.value = val;
     });
+
+  console.dir(getOptions());
 }
 
 function getOptions() {
@@ -40,7 +48,9 @@ function getOptions() {
       var el = document.getElementById(k);
       var val = el.value;
       if (meta[k].type === 'number') {
-        val = val.length ? parseInt(val, 10) : Infinity;
+        val = val.length ? parseFloat(val) : Infinity;
+      } else if (meta[k].type === 'boolean') {
+        val = val.length ? Boolean(val) : false; 
       }
       acc[k] = val;
       return acc;
@@ -57,6 +67,25 @@ function hookHoverMethods() {
   }
 }
 
+function showRefreshButton() {
+  refreshButtonEl.classList.remove('hidden');
+}
+
+function render(arr) {
+  var opts = getOptions();
+  console.dir(opts);
+
+  var svg;
+  try {
+    currentFolded = arr;
+    svg = flamegraph(arr, opts);
+    flamegraphEl.innerHTML= svg;
+    hookHoverMethods();
+  } catch (err) {
+    flamegraphEl.innerHTML = '<br><p class="error">' + err.toString() + '</p>';
+  }
+}
+
 function readFile(file, cb) {
   var fileReader = new FileReader();
   fileReader.readAsText(file, 'utf-8');
@@ -70,21 +99,23 @@ function onFile(e) {
   if (!file) return;
   readFile(file, function (e) {
     var arr = e.target.result.split('\n');
-    var opts = {} //getOptions();
-    var svg;
-    try {
-      svg = flamegraph(arr, opts);
-      flamegraphEl.innerHTML= svg;
-     hookHoverMethods();
-    } catch (err) {
-      flamegraphEl.innerHTML = '<br><p class="error">' + err.toString() + '</p>';
-    }
+    render(arr);
+    showRefreshButton();
   });
 }
 
+function refresh() {
+  if (!currentFolded) return;
+  render(currentFolded);
+
+}
+
+// Event Listeners
 inputfileEl.addEventListener('change', onFile);
 inputfileButtonEl.onclick = function () {
   inputfileEl.click();
 }
+refreshButtonEl.onclick = refresh;
 
+// Setup 
 renderOptions();

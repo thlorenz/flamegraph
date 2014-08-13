@@ -10,10 +10,22 @@
     <input type="file" id="inputfile" name="inputfile" /> 
     <input type="button" id="inputfile-button" class="button rounded red" value="Load File">
     <div class="options" id="options"></div>
-    <input type="button" id="refresh-button" class="button rounded hidden" value="Refresh">
     <div id="flamegraph">
-      <!--<h3>Flamegraphs via Mac Instruments</h3>
-      <img src="img/instruments.gif" alt="instruments">-->
+
+      <h2>Flamegraphs via Linux perf</h2>
+      <h4>Run your app with perf</h4>
+
+      <pre><code>perf record -e cycles:u -g -- node --perf-basic-prof app.js</code></pre>
+
+      <h4>Extract trace from <code>perf.data</code> file</h4>
+
+      <pre><code>perf script &gt; perf-script.txt</code></pre>
+
+      <h4>Load File</h4><pre><code>perf-script.txt</code></pre>
+
+      <h2>Flamegraphs via Mac Instruments</h2>
+      <img src="img/instruments.gif" alt="instruments">
+
     </div>
   </section>
   <script type="text/javascript" src="bundle.js"></script>

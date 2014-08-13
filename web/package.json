@@ -4,7 +4,9 @@
   "description": "Demoing how flamegraph can be used in a webpage",
   "main": "main.js",
   "browserify": {
-    "transform": [ "hbsfy" ]
+    "transform": [
+      "hbsfy"
+    ]
   },
   "scripts": {
     "start": "watchify -d main.js -o bundle.js"

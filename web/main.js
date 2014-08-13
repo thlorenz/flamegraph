@@ -1,49 +1,51 @@
 'use strict';
 
 var flamegraph = require('flamegraph');
+
 var optsTemplate = require('./opts-template.hbs');
 var flamegraphEl = document.getElementById('flamegraph');
 var inputfileEl = document.getElementById('inputfile')
 var inputfileButtonEl = document.getElementById('inputfile-button')
-var refreshButtonEl = document.getElementById('refresh-button')
 var optionsEl = document.getElementById('options');
+
+var excludeOptions = [ 'fonttype', 'fontwidth', 'countname', 'colors', 'timemax', 'factor', 'hash', 'title', 'titlestring', 'nametype', 'bgcolor1', 'bgcolor2' ];
+var usedMetaKeys = Object.keys(flamegraph.defaultOptsMeta).filter(function (k) { return !~excludeOptions.indexOf(k) });
+
 var currentFolded;
 
 function renderOptions() {
   var opts = flamegraph.defaultOpts
     , meta = flamegraph.defaultOptsMeta;
 
-  console.dir(opts);
-  var context = Object.keys(meta)
+  var context = usedMetaKeys
     .reduce(function (acc, k) {
       var type = meta[k].type;
-      if (type === 'boolean') type = 'checkbox';
-      if (type === 'string') type = 'text';
       return acc.concat({
-          name         : k
-        , value        : opts[k]
-        , type         : type 
+          name        : k
+        , value       : opts[k]
+        , type        : type
         , description : meta[k].description
+        , min         : meta[k].min
+        , max         : meta[k].max
+        , step        : meta[k].step
       });
     }, []);
   var html = optsTemplate(context);
   optionsEl.innerHTML = html;
 
   // Need to set value in JS since it's not picked up when set in html that is added to DOM afterwards
-  Object.keys(meta)
+  usedMetaKeys 
     .forEach(function (k) {
       var val = opts[k];
       var el = document.getElementById(k);
       el.value = val;
     });
-
-  console.dir(getOptions());
 }
 
 function getOptions() {
   var meta = flamegraph.defaultOptsMeta;
 
-  return Object.keys(meta)
+  usedMetaKeys 
     .reduce(function (acc, k) {
       var el = document.getElementById(k);
       var val = el.value;
@@ -54,7 +56,22 @@ function getOptions() {
       }
       acc[k] = val;
       return acc;
-    }, {});
+    }, flamegraph.defaultOpts);
+}
+
+function onOptionsChange(e) {
+  refresh();
+}
+
+function registerChange() {
+  var inputs = optionsEl.getElementsByTagName('input')
+    , i, el;
+  
+  for (i = 0; i < inputs.length; i++) {
+    el = inputs[i];
+    console.log('registering', el);
+    el.onchange = onOptionsChange;
+  }
 }
 
 function hookHoverMethods() {
@@ -65,10 +82,6 @@ function hookHoverMethods() {
   window.c = function c() { 
     details.nodeValue = ' '; 
   }
-}
-
-function showRefreshButton() {
-  refreshButtonEl.classList.remove('hidden');
 }
 
 function render(arr) {
@@ -100,7 +113,6 @@ function onFile(e) {
   readFile(file, function (e) {
     var arr = e.target.result.split('\n');
     render(arr);
-    showRefreshButton();
   });
 }
 
@@ -115,7 +127,7 @@ inputfileEl.addEventListener('change', onFile);
 inputfileButtonEl.onclick = function () {
   inputfileEl.click();
 }
-refreshButtonEl.onclick = refresh;
 
 // Setup 
 renderOptions();
+registerChange();

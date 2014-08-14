@@ -42,6 +42,10 @@
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dd7671', endColorstr='#dd2011',GradientType=0 );
 }
 
+.func_g {
+  cursor: pointer;
+}
+
 #inputfile-button {
   margin-left: -44px;
   margin-top: -3px;

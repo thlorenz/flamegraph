@@ -21,7 +21,9 @@
     "test-0.10": "nave use 0.10 npm run test-main",
     "test-0.11": "nave use 0.11 npm run test-main",
     "test-all": "npm run test-main && npm run test-0.10 && npm run test-0.11",
-    "test": "if [ -e $TRAVIS ]; then npm run test-all; else npm run test-main; fi"
+    "test": "if [ -e $TRAVIS ]; then npm run test-all; else npm run test-main; fi",
+    "watch": "watchify -d web/main.js -o web/bundle.js",
+    "bundle": "browserify web/main.js | uglifyjs > web/bundle.js"
   },
   "repository": {
     "type": "git",
@@ -35,12 +37,18 @@
     "hbsfy": "~2.0.0",
     "minimist": "~0.2.0",
     "readable-stream": "~1.0.27-1",
+    "resolve-jit-symbols": "~0.3.4",
     "through2": "~0.6.0",
     "xtend": "~4.0.0"
   },
   "devDependencies": {
+    "browserify": "~6.3.2",
+    "hbsfy": "~2.0.0",
     "nave": "~0.4.3",
-    "tape": "~1.0.4"
+    "stream-array": "~1.0.1",
+    "tape": "~1.0.4",
+    "uglify-js": "~2.4.15",
+    "watchify": "~2.1.1"
   },
   "keywords": [
     "flamegraph",

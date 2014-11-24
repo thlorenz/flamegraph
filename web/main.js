@@ -1,12 +1,16 @@
 'use strict';
+/*jshint browser: true*/
 
-var flamegraph = require('flamegraph');
+var flamegraph = require('../')
+  , jitResolver = require('resolve-jit-symbols')
+  , resolver;
 
 var optsTemplate = require('./opts-template.hbs');
-var flamegraphEl = document.getElementById('flamegraph');
-var inputfileEl = document.getElementById('inputfile')
-var inputfileButtonEl = document.getElementById('inputfile-button')
-var optionsEl = document.getElementById('options');
+
+var flamegraphEl    = document.getElementById('flamegraph');
+var callgraphFileEl = document.getElementById('callgraph-file')
+var mapFileEl = document.getElementById('map-file')
+var optionsEl       = document.getElementById('options');
 
 var excludeOptions = [ 'fonttype', 'fontwidth', 'countname', 'colors', 'timemax', 'factor', 'hash', 'title', 'titlestring', 'nametype', 'bgcolor1', 'bgcolor2' ];
 var usedMetaKeys = Object.keys(flamegraph.defaultOptsMeta).filter(function (k) { return !~excludeOptions.indexOf(k) });
@@ -69,7 +73,6 @@ function registerChange() {
   
   for (i = 0; i < inputs.length; i++) {
     el = inputs[i];
-    console.log('registering', el);
     el.onchange = onOptionsChange;
   }
 }
@@ -86,7 +89,6 @@ function hookHoverMethods() {
 
 function render(arr) {
   var opts = getOptions();
-  console.dir(opts);
 
   var svg;
   try {
@@ -99,6 +101,11 @@ function render(arr) {
   }
 }
 
+function refresh() {
+  if (!currentFolded) return;
+  render(currentFolded);
+}
+
 function readFile(file, cb) {
   var fileReader = new FileReader();
   fileReader.readAsText(file, 'utf-8');
@@ -107,26 +114,36 @@ function readFile(file, cb) {
   }
 }
 
-function onFile(e) {
+function onFile(e, process) {
   var file = e.target.files[0];
   if (!file) return;
-  readFile(file, function (e) {
-    var arr = e.target.result.split('\n');
-    render(arr);
-  });
+  readFile(file, process);
 }
 
-function refresh() {
-  if (!currentFolded) return;
-  render(currentFolded);
+function processCallgraphFile(e) {
+  var arr = e.target.result.split('\n');
+  if (resolver) arr = resolver.resolveMulti(arr);
+  render(arr);
+}
 
+function processMapFile(e) {
+  var map = e.target.result;
+  resolver = jitResolver(map);
+  if (currentFolded) currentFolded = resolver.resolveMulti(currentFolded);
+  refresh();
+}
+
+function onCallgraphFile(e) {
+  onFile(e, processCallgraphFile);
+}
+
+function onMapFile(e) {
+  onFile(e, processMapFile);
 }
 
 // Event Listeners
-inputfileEl.addEventListener('change', onFile);
-inputfileButtonEl.onclick = function () {
-  inputfileEl.click();
-}
+callgraphFileEl.addEventListener('change', onCallgraphFile);
+mapFileEl.addEventListener('change', onMapFile);
 
 // Setup 
 renderOptions();

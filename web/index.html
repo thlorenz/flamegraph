@@ -16,25 +16,66 @@
       </div>
     </div>
     <div class="options ui-part" id="options"></div>
-    <div class="instructions ui-part hidden" id="instructions">
-      <!-- TODO mostly redo -->
-      <h2>Flamegraphs via Linux perf</h2>
-      <h4>Run your app with perf</h4>
+    <div class="instructions ui-part" id="instructions">
+      <h2>Instructions</h2>
+      <div class="instructions-sheet">
+        <h3>Requirements</h3>
+        <p>The steps for <i>Mac</i> and <i>Linux</i> are explained below, but in both cases ensure to run your app with <b>node version <code>&gt;=0.11.3</code></b>.</p>
+      </div>
 
-      <pre><code>perf record -e cycles:u -g -- node --perf-basic-prof app.js</code></pre>
+      <div class="instructions-sheet">
+        <h3>Mac</h3>
+        <h4>Create a Callgraph</h4>
+        <p>Run your app</p>
+        <pre><code>node --perf-basic-prof app.js</code></pre>
 
-      <h4>Extract trace from <code>perf.data</code> file</h4>
+        <p>Use the 
+          <a href="https://developer.apple.com/library/ios/documentation/AnalysisTools/Reference/Instruments_User_Reference/TimeProfilerInstrument/TimeProfilerInstrument.html">
+            Instruments Time Profiler
+          </a>
+          to collect stack trace information as follows:
+        </p>
+        <ol>
+          <li>attach Instruments to your running app and excercise it to build the <i>call tree</i>.</li>
+          <li>expand the part of the <i>call tree</i> you are interested in</li>
+          <li><i>Instrument/Export Track</i> to a <code>.csv</code> file</li>
+          <li>cleanly exit your app and check that a map file was generated at <code>/tmp/perf-&lt;pid&gt;.map</code></li>
+        </ol>
 
-      <pre><code>perf script &gt; perf-script.txt</code></pre>
+        <h4>Load</h4>
+        <ol>
+          <li>Load the Instruments generated <code>.csv</code> as the <i>Callgraph</i></li>
+          <li>Load the <code>/tmp/perf-&lt;pid&gt;.map</code> as the <i>Mapfile</i></li>
+        </ol>
+      </div>
 
-      <h4>Load File</h4><pre><code>perf-script.txt</code></pre>
+      <div class="instructions-sheet">
+        <h3>Linux</h3>
+        <h4>Create Callgraph</h4>
+        <p>Run your app with perf:</p>
+        <pre><code>perf record -e cycles:u -g -- node --perf-basic-prof app.js</code></pre>
 
-      <h2>Flamegraphs via Mac Instruments</h2>
-      <img src="img/instruments.gif" alt="instruments">
+        <p>Extract trace from <code>perf.data</code> file</p>
+
+        <pre><code>perf script &gt; perf-script.txt</code></pre>
+
+        <h4>Load</h4>
+        Just loading the <code>perf-script.txt</code> file as the <i>Callgraph</i> suffices since <code>perf</code> already resolved the symbols.
+      </div>
+
     </div>
     <div id="flamegraph" class="ui-part"></div>
     <a href="https://github.com/thlorenz/flamegraph"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
   </section>
   <script type="text/javascript" src="bundle.js"></script>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-32151587-11', 'auto');
+    ga('send', 'pageview');
+  </script>
 </body>
 </html>

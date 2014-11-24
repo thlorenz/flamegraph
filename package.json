@@ -31,20 +31,19 @@
   },
   "homepage": "https://github.com/thlorenz/flamegraph",
   "dependencies": {
-    "brfs": "~1.0.2",
     "concat-stream": "~1.4.6",
     "handlebars": "~2.0.0-alpha.4",
-    "hbsfy": "~2.0.0",
     "minimist": "~0.2.0",
     "readable-stream": "~1.0.27-1",
-    "resolve-jit-symbols": "~0.3.4",
     "through2": "~0.6.0",
     "xtend": "~4.0.0"
   },
   "devDependencies": {
+    "brfs": "~1.0.2",
     "browserify": "~6.3.2",
     "hbsfy": "~2.0.0",
     "nave": "~0.4.3",
+    "resolve-jit-symbols": "~0.3.4",
     "stream-array": "~1.0.1",
     "tape": "~1.0.4",
     "uglify-js": "~2.4.15",

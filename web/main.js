@@ -9,8 +9,9 @@ var optsTemplate = require('./opts-template.hbs');
 
 var flamegraphEl    = document.getElementById('flamegraph');
 var callgraphFileEl = document.getElementById('callgraph-file')
-var mapFileEl = document.getElementById('map-file')
+var mapFileEl       = document.getElementById('map-file')
 var optionsEl       = document.getElementById('options');
+var instructionsEl  = document.getElementById('instructions');
 
 var excludeOptions = [ 'fonttype', 'fontwidth', 'countname', 'colors', 'timemax', 'factor', 'hash', 'title', 'titlestring', 'nametype', 'bgcolor1', 'bgcolor2' ];
 var usedMetaKeys = Object.keys(flamegraph.defaultOptsMeta).filter(function (k) { return !~excludeOptions.indexOf(k) });
@@ -88,6 +89,8 @@ function hookHoverMethods() {
 }
 
 function render(arr) {
+  if (instructionsEl.parentElement) instructionsEl.parentElement.removeChild(instructionsEl);
+
   var opts = getOptions();
 
   var svg;

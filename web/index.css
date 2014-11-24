@@ -58,6 +58,25 @@ body {
   width: 220px;
 }
 
+.instructions-sheet {
+  background: antiquewhite;
+  color: black;
+  border: solid 1px black;
+  border-radius: 3px;
+  padding: 5px;
+  margin: 5px;
+  font-family: Helvetica Neue;
+}
+
+.instructions-sheet code {
+  background: white;
+  padding: 3px;
+}
+
+.instructions-sheet h3 {
+  text-decoration: underline;
+}
+
 label {
   margin-right: 5px;
 }

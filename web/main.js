@@ -129,8 +129,13 @@ function processCallgraphFile(e) {
   render(arr);
 }
 
+function cleanMap(map) {
+  return map.replace(/LazyCompile\:/gm, '');
+}
+
 function processMapFile(e) {
   var map = e.target.result;
+  map = cleanMap(map);
   resolver = jitResolver(map);
   if (currentFolded) currentFolded = resolver.resolveMulti(currentFolded);
   refresh();

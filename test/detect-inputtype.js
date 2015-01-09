@@ -7,6 +7,7 @@ var detect = require('../lib/detect-inputtype')
 
 var instruments = fs.readFileSync(__dirname + '/fixtures/instruments-part1.csv').toString().split('\n')
 var perf = fs.readFileSync(__dirname + '/fixtures/perf-script-part1.txt').toString().split('\n')
+var commentedPerf = fs.readFileSync(__dirname + '/fixtures/perf-script-commented.txt').toString().split('\n')
 
 test('\ninput detector', function (t) {
   t.equal(detect([]), null, 'returns null for empty array')
@@ -14,5 +15,7 @@ test('\ninput detector', function (t) {
 
   t.equal(detect(instruments), 'instruments', 'detects instruments csv')
   t.equal(detect(perf), 'perf', 'detects file generated via `perf script`')
+
+  t.equal(detect(commentedPerf), 'perf', 'detects file generated via `perf script` with header comments')
   t.end()
 })

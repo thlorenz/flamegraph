@@ -84,6 +84,8 @@ test('\ncontextifying parsed stack with default options', function (t) {
         xpad: 10,
         titleX: 600,
         detailsY: 186,
+        internals: false,
+        optimizationinfo: false,
         nodes:
         [ { name: 'node::AsyncWrap::MakeCallback(v8::Handle&lt;v8::Function&gt;, int, v8::Handle&lt;v8::Value&gt;*)',
             samples: '(1602 samples), 12.2%)',

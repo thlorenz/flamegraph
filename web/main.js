@@ -16,7 +16,7 @@ var instructionsEl  = document.getElementById('instructions');
 var excludeOptions = [ 'fonttype', 'fontwidth', 'countname', 'colors', 'timemax', 'factor', 'hash', 'title', 'titlestring', 'nametype', 'bgcolor1', 'bgcolor2' ];
 var usedMetaKeys = Object.keys(flamegraph.defaultOptsMeta).filter(function (k) { return !~excludeOptions.indexOf(k) });
 
-var currentFolded;
+var currentCallgraph;
 
 function renderOptions() {
   var opts = flamegraph.defaultOpts
@@ -47,10 +47,11 @@ function renderOptions() {
     });
 }
 
+
 function getOptions() {
   var meta = flamegraph.defaultOptsMeta;
 
-  usedMetaKeys 
+  return usedMetaKeys 
     .reduce(function (acc, k) {
       var el = document.getElementById(k);
       var val = el.value;
@@ -58,6 +59,8 @@ function getOptions() {
         val = val.length ? parseFloat(val) : Infinity;
       } else if (meta[k].type === 'boolean') {
         val = val.length ? Boolean(val) : false; 
+      } else if (meta[k].type === 'checkbox') {
+        val = el.checked ? true : false
       }
       acc[k] = val;
       return acc;
@@ -92,10 +95,11 @@ function render(arr) {
   if (instructionsEl.parentElement) instructionsEl.parentElement.removeChild(instructionsEl);
 
   var opts = getOptions();
+  console.log(opts)
 
   var svg;
   try {
-    currentFolded = arr;
+    currentCallgraph = arr;
     svg = flamegraph(arr, opts);
     flamegraphEl.innerHTML= svg;
     hookHoverMethods();
@@ -105,8 +109,8 @@ function render(arr) {
 }
 
 function refresh() {
-  if (!currentFolded) return;
-  render(currentFolded);
+  if (!currentCallgraph) return;
+  render(currentCallgraph);
 }
 
 function readFile(file, cb) {
@@ -129,15 +133,10 @@ function processCallgraphFile(e) {
   render(arr);
 }
 
-function cleanMap(map) {
-  return map.replace(/LazyCompile\:/gm, '');
-}
-
 function processMapFile(e) {
   var map = e.target.result;
-  map = cleanMap(map);
   resolver = jitResolver(map);
-  if (currentFolded) currentFolded = resolver.resolveMulti(currentFolded);
+  if (currentCallgraph) currentCallgraph = resolver.resolveMulti(currentCallgraph);
   refresh();
 }
 

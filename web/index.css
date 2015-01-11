@@ -40,6 +40,10 @@ body {
   display: inline-block;
 }
 
+input[type=checkbox] {
+  cursor: pointer;
+}
+
 .callgraph {
   display: inline;
 }

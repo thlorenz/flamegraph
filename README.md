@@ -10,7 +10,7 @@ cat instruments-callgraph.csv | flamegraph -t instruments > flamegraph.svg
 
 [Try the online flamegraph app](http://thlorenz.github.io/flamegraph/web/)
 
-[![assets/flamegraph.png](assets/flamegraph.png)](http://thlorenz.github.io/flamegraph/web/)
+[![assets/flamegraph.gif](assets/flamegraph.gif)](http://thlorenz.github.io/flamegraph/web/)
 
 ## Installation
 

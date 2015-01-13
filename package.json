@@ -41,6 +41,7 @@
   "devDependencies": {
     "brfs": "~1.0.2",
     "browserify": "~6.3.2",
+    "debounce": "^1.0.0",
     "hbsfy": "~2.0.0",
     "nave": "~0.4.3",
     "resolve-jit-symbols": "~0.3.4",

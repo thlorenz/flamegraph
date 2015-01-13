@@ -3,6 +3,7 @@
 
 var flamegraph = require('../')
   , jitResolver = require('resolve-jit-symbols')
+  , initSearch = require('./init-search')
   , resolver;
 
 var optsTemplate = require('./opts-template.hbs');
@@ -95,7 +96,6 @@ function render(arr) {
   if (instructionsEl.parentElement) instructionsEl.parentElement.removeChild(instructionsEl);
 
   var opts = getOptions();
-  console.log(opts)
 
   var svg;
   try {
@@ -111,6 +111,7 @@ function render(arr) {
 function refresh() {
   if (!currentCallgraph) return;
   render(currentCallgraph);
+  initSearch.refresh();
 }
 
 function readFile(file, cb) {
@@ -155,3 +156,4 @@ mapFileEl.addEventListener('change', onMapFile);
 // Setup 
 renderOptions();
 registerChange();
+initSearch(flamegraphEl);

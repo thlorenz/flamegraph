@@ -22,9 +22,9 @@
 <text text-anchor="left" x="{{xpad}}" y="{{detailsY}}" font-size="{{fontsize}}" font-family="{{fonttype}}" fill="rgb(0,0,0)" id="details"> </text>
 
 {{#each nodes}}
-<g class="func_g" onmouseover="s('{{{name}}} {{{samples}}}')" onmouseout="c()">
+<g class="func_g" onmouseover="s('{{{name}}} {{{samples}}}')" onmouseout="c()" data-search="{{{search}}}">
 <title>{{{name}}} {{{samples}}}</title>
-  <rect x="{{rect_x}}" y="{{rect_y}}" width="{{rect_w}}" height="{{rect_h}}" fill="{{rect_fill}}" rx="2" ry="2" />
+  <rect x="{{rect_x}}" y="{{rect_y}}" width="{{rect_w}}" data-width="{{rect_w}}" height="{{rect_h}}" data-height="{{rect_h}}" fill="{{rect_fill}}" rx="2" ry="2" />
 
 {{#if showText }}
 <text text-anchor="" x="{{text_x}}" y="{{text_y}}" font-size="{{../../fontsize}}" font-family="{{../../fonttype}}" fill="rgb(0,0,0)">{{{text}}}</text>

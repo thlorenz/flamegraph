@@ -18,6 +18,22 @@ body {
   overflow: auto;
 }
 
+.ui-part.search input[type=search] {
+  width: 80%;
+  margin: 5px;
+}
+
+.ui-part.search input[type=text] {
+  width: 100%;
+  background: none;
+  border: none;
+
+  color: rgb(236, 106, 26);
+  font-size: 14px;
+  margin-left: 4px;
+
+}
+
 .button {
   border-radius: 2px;
   box-shadow: inset rgba(255,255,255,0.3) 1px 1px 0;
@@ -29,10 +45,6 @@ body {
 
 .rounded {
   border-radius: 5px;
-}
-
-.func_g {
-  cursor: pointer;
 }
 
 .options-input {
@@ -88,3 +100,32 @@ label {
 .hidden {
   display: none;
 }
+
+.func_g {
+  cursor: pointer;
+}
+
+.func_g.match {
+  overflow: visible;
+}
+
+.func_g.match rect {
+  fill: rgb(165, 133, 229);
+}
+
+.func_g.blink rect {
+  animation: blink 0.2s steps(20, start) infinite alternate;
+  -webkit-animation: blink 0.2s steps(20, start) infinite alternate;
+}
+
+  @keyframes blink {
+    to {
+      opacity: 0.3;
+    }
+  }
+
+  @-webkit-keyframes blink {
+    to {
+      opacity: 0.3;
+    }
+  }

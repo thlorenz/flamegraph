@@ -14,3 +14,20 @@ test('\nfiltering internals from folded instruments graph', function (t) {
 
   t.end()
 })
+
+test('\nfiltering internals with unresolved hex addresses from folded instruments graph', function (t) {
+  var arr = [
+      '<Unnamed Thread> 0x155005 1673'
+    , '<Unnamed Thread> 0x155005;start;0x155005 1663'
+    , '<Unnamed Thread> 0x155005;start;0x155005;0x155009;node::Start(int, char**) 1663'
+  ]
+  var filtered = filter(arr);
+  t.deepEqual(
+      filtered
+    , [ '<Unnamed Thread> 0x155005 1673',
+        '<Unnamed Thread> 0x155005;start 1663',
+        '<Unnamed Thread> 0x155005;start 1663' ]
+    , 'filters out lonely hex addresses'
+  )
+  t.end()
+})

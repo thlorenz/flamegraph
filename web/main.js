@@ -4,6 +4,7 @@
 var flamegraph = require('../')
   , jitResolver = require('resolve-jit-symbols')
   , initSearch = require('./init-search')
+  , zoom = require('./zoom')()
   , resolver;
 
 var optsTemplate = require('./opts-template.hbs');
@@ -103,6 +104,7 @@ function render(arr) {
     svg = flamegraph(arr, opts);
     flamegraphEl.innerHTML= svg;
     hookHoverMethods();
+    zoom.init();
   } catch (err) {
     flamegraphEl.innerHTML = '<br><p class="error">' + err.toString() + '</p>';
   }

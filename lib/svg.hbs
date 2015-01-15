@@ -1,6 +1,13 @@
 <?xml version="1.0" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" width="{{imagewidth}}" height="{{imageheight}}" onload="init(evt)" viewBox="0 0 {{imagewidth}} {{imageheight}}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+<svg version="1.1" id="flamegraph-svg" 
+  data-width="{{imagewidth}}" width="{{imagewidth}}" 
+  height="{{imageheight}}" data-height="{{imageheight}}"
+  onload="init(evt)" 
+  viewBox="0 0 {{imagewidth}} {{imageheight}}" 
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
 <defs>
 	<linearGradient id="background" y1="0" y2="1" x1="0" x2="0">
     <stop stop-color="{{bgcolor1}}" offset="5%" />
@@ -17,19 +24,15 @@
 	function c() { details.nodeValue = ' '; }
 </script>
 
-<rect x="0.0" y="0" width="{{imagewidth}}" height="{{imageheight}}" fill="url(#background)"  />
-<text text-anchor="middle" x="{{titleX}}" y="24" font-size="17" font-family="{{fonttype}}" fill="rgb(0,0,0)">{{{titletext}}}</text>
+<rect x="0.0" y="0" id="svg-background" width="{{imagewidth}}" height="{{imageheight}}" fill="url(#background)"  />
+<!--<text text-anchor="middle" x="{{titleX}}" y="24" font-size="17" font-family="{{fonttype}}" fill="rgb(0,0,0)">{{{titletext}}}</text>-->
 <text text-anchor="left" x="{{xpad}}" y="{{detailsY}}" font-size="{{fontsize}}" font-family="{{fonttype}}" fill="rgb(0,0,0)" id="details"> </text>
 
 {{#each nodes}}
-<g class="func_g" onmouseover="s('{{{name}}} {{{samples}}}')" onmouseout="c()" data-search="{{{search}}}">
-<title>{{{name}}} {{{samples}}}</title>
-  <rect x="{{rect_x}}" y="{{rect_y}}" width="{{rect_w}}" data-width="{{rect_w}}" height="{{rect_h}}" data-height="{{rect_h}}" fill="{{rect_fill}}" rx="2" ry="2" />
-
-{{#if showText }}
-<text text-anchor="" x="{{text_x}}" y="{{text_y}}" font-size="{{../../fontsize}}" font-family="{{../../fonttype}}" fill="rgb(0,0,0)">{{{text}}}</text>
-{{/if}}
-
+<g class="func_g {{class}}" onmouseover="s('{{{name}}} {{{samples}}}')" onmouseout="c()" data-search="{{{search}}}" data-funcname="{{{func}}}">
+  <title>{{{name}}} {{{samples}}}</title>
+  <rect x="{{rect_x}}" data-x="{{rect_x}}" y="{{rect_y}}" width="{{rect_w}}" data-width="{{rect_w}}" height="{{rect_h}}" data-height="{{rect_h}}" fill="{{rect_fill}}" rx="2" ry="2"></rect>
+  <text data-x="{{text_x}}" x="{{text_x}}" y="{{text_y}}" font-size="{{../fontsize}}" font-family="{{../fonttype}}" fill="rgb(0,0,0)">{{{text}}}</text>
 </g>
 {{/each}}
 

@@ -15,7 +15,7 @@ var mapFileEl       = document.getElementById('map-file')
 var optionsEl       = document.getElementById('options');
 var instructionsEl  = document.getElementById('instructions');
 
-var excludeOptions = [ 'fonttype', 'fontwidth', 'countname', 'colors', 'timemax', 'factor', 'hash', 'title', 'titlestring', 'nametype', 'bgcolor1', 'bgcolor2' ];
+var excludeOptions = [ 'fonttype', 'fontwidth', 'fontsize', 'imagewidth', 'countname', 'colors', 'timemax', 'factor', 'hash', 'title', 'titlestring', 'nametype', 'bgcolor1', 'bgcolor2' ];
 var usedMetaKeys = Object.keys(flamegraph.defaultOptsMeta).filter(function (k) { return !~excludeOptions.indexOf(k) });
 
 var currentCallgraph;

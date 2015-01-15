@@ -61,6 +61,9 @@ proto._zoomRects = function _zoomRects() {
     w = rect.dataset.width;
     newWidth = w * this._zoomLevel;
 
+    // ensure to keep search matches visible
+    if (func.classList.contains('match') && newWidth < 10) newWidth = 10;
+
     x = rect.dataset.x;
     newX = x * this._zoomLevel;
     

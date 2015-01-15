@@ -23,10 +23,8 @@ function addMatchIndicator(el) {
   var h = rect.getAttribute('height');
  
   // make invisible or too small nodes that matched the search visible
-  // indicate that they were made visible by making them half as high
   if (w < 10) {
     rect.setAttribute('width', 10);
-    rect.setAttribute('height', h / 2);
   }
 }
 

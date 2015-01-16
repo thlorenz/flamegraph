@@ -18,6 +18,8 @@ cat instruments-callgraph.csv | flamegraph -t instruments > flamegraph.svg
 
 ## Usage
 
+**Requires Node.js version `0.11.13` or higher**.
+
 ```
 flamegraph <options>
 
@@ -25,7 +27,7 @@ Generates a flamegraph from the callgraph data of the given `inputtype` that is 
 
 OPTIONS:
 
-  --inputtype -t      the type of callgraph 'instruments | perf'
+  --inputtype -t      the type of callgraph 'instruments | perf | cpuprofile'
 
   --fonttype          font family used                  default: 'Verdana'
   --fontsize          base text size                    default: 12
@@ -43,6 +45,7 @@ OPTIONS:
   --titletext         centered heading                  default: 'Flame Graph'
   --nametype          what are the names in the data?   default: 'Function:'
 
+  --removenarrows     removes narrow functions instead of adding a 'hidden' class   default: true
   --internals         include internal functions        default: false
   --optimizationinfo  include optimization indicators   default: false
 

@@ -35,7 +35,7 @@ function run(type, name, input, folded) {
       t.equal(actual.length, expected.length, 'have same number of lines')
 //      t.deepEqual(actual, expected, 'generates same folded content as original perl script')
     } catch (err) {
-      t.fail(err);
+      t.ifError(err);
     }
     t.end()
   })
@@ -59,6 +59,10 @@ input = fs.readFileSync(__dirname + '/fixtures/perf-script-part1.txt', 'utf8')
 folded = fs.readFileSync(__dirname + '/fixtures/perf-script-part1.folded', 'utf8')
 
 run('perf', 'collapsing first part of txt file exported from perf', input, folded)
+
+input = fs.readFileSync(__dirname + '/fixtures/v8-profiler.cpuprofile', 'utf8')
+folded = fs.readFileSync(__dirname + '/fixtures/v8-profiler.folded', 'utf8')
+run('cpuprofile', 'collapsing v8-profiler generated cpuprofile', input, folded)
 
 // The below currently fails cause we add one more line than the original perl script
 // not sure if that is actually a problem

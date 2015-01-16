@@ -101,6 +101,7 @@ function render(arr) {
   var svg;
   try {
     currentCallgraph = arr;
+    opts.removenarrows = false;
     svg = flamegraph(arr, opts);
     flamegraphEl.innerHTML= svg;
     hookHoverMethods();

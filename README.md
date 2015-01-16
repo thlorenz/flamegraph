@@ -56,7 +56,7 @@ EXAMPLE:
 The input data needs to be generated as follows:
 
 - [use perf on linux](https://github.com/thlorenz/flamegraph/blob/master/generate-perf-data.md)
-- [use instruments on mac](https://github.com/thlorenz/flamegraph/blob/master/web/img/instruments.gif)
+- [use instruments on mac](https://raw.githubusercontent.com/thlorenz/flamegraph/gh-pages/web/img/instruments.gif)
 
 ## API
 

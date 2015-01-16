@@ -105,7 +105,7 @@ function render(arr) {
     svg = flamegraph(arr, opts);
     flamegraphEl.innerHTML= svg;
     hookHoverMethods();
-    zoom.init();
+    zoom.init(opts);
   } catch (err) {
     flamegraphEl.innerHTML = '<br><p class="error">' + err.toString() + '</p>';
   }

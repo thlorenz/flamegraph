@@ -20,7 +20,7 @@ function Zoom() {
 var proto = Zoom.prototype;
 module.exports = Zoom;
 
-proto.init = function init() {
+proto.init = function init(opts) {
   if (this._flamegraphSvgEl) wheel.off(this._flamegraphSvgEl, this._performZoom);
 
   this._zoomLevel = 1;
@@ -30,6 +30,8 @@ proto.init = function init() {
   this._viewBoxWidth = this._flamegraphSvgEl.dataset.width;
   this._viewBoxHeight = this._flamegraphSvgEl.dataset.height;
   this._performZoom = performZoom(this);
+
+  this._opts = opts;
 
   if (this._flamegraphSvgEl) wheel.on(this._flamegraphSvgEl, this._performZoom, false);
 }
@@ -63,6 +65,10 @@ proto._zoomRects = function _zoomRects() {
 
     // ensure to keep search matches visible
     if (func.classList.contains('match') && newWidth < 10) newWidth = 10;
+
+    // hide/show rects according to change width
+    if (newWidth < this._opts.minwidth) func.classList.add('hidden');
+    else func.classList.remove('hidden');
 
     x = rect.dataset.x;
     newX = x * this._zoomLevel;

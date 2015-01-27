@@ -35,16 +35,16 @@ exports = module.exports =
  * @param {string} opts.titletext       centered heading                  default: `'Flame Graph'`
  * @param {string} opts.nametype        what are the names in the data?   default: `'Function:'`
  * @param {boolean} opts.keepOptimizationInfo keep function optimization information  default: `false`
- * @param {boolean} opts.keepInternals  keep internal methods             default: `false`
+ * @param {boolean} opts.internals  keep internal methods             default: `false`
  * @return {string} svg                 the rendered svg
  */
 function flamegraph(arr, opts) {
   if (!Array.isArray(arr)) throw new TypeError('First arg needs to be an array of lines.');
 
   opts = opts || {};
-  var collapsed = stackCollapseFromArray(arr, opts.inputtype);
+  var collapsed = stackCollapseFromArray(arr, opts);
   collapsed = filterLazy(collapsed, opts);
-  if (!opts.internals) collapsed = filterInternals(collapsed, opts);
+//  if (!opts.internals) collapsed = filterInternals(collapsed, opts);
   return svg(collapsed, opts);
 }
 
@@ -55,17 +55,20 @@ var stackCollapseFromArray = exports.stackCollapseFromArray =
  * 
  * @name flamegraph::stackCollapseFromArray
  * @function
- * @param {string} type the type of input to collapse (if not supplied it is detected from the input)
+ * @param {Object=} opts
+ * @param {string=} opts.inputtype the type of input to collapse (if not supplied it is detected from the input)
+ * @param {boolean} opts.internals  keep internal methods default: `false`
  * @param {Array.<string>} arr lines to collapse
  * @return {Array.<string>} array of collapsed lines
  */
-function stackCollpaseFromArray (arr, inputType) {
+function stackCollpaseFromArray (arr, opts) {
   if (!Array.isArray(arr)) throw new TypeError('First arg needs to be an array of lines.');
 
-  inputType = inputType || detectInputType(arr);
-  if (!inputType) throw new Error('No input type given and unable to detect it for the given input!');
+  opts = opts || {};
+  opts.inputtype = opts.inputtype || detectInputType(arr);
+  if (!opts.inputtype) throw new Error('No input type given and unable to detect it for the given input!');
 
-  return stackCollapse(inputType, arr);
+  return stackCollapse(opts, arr);
 }
 
 exports.stackCollapse   = stackCollapse;

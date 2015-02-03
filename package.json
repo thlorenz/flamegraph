@@ -32,10 +32,12 @@
   "homepage": "https://github.com/thlorenz/flamegraph",
   "dependencies": {
     "concat-stream": "~1.4.6",
+    "cpuprofilify": "^0.2.3",
     "handlebars": "~2.0.0-alpha.4",
     "minimist": "~0.2.0",
     "readable-stream": "~1.0.27-1",
     "through2": "~0.6.0",
+    "trace-filter-internals": "^0.1.0",
     "xtend": "~4.0.0"
   },
   "devDependencies": {

@@ -1,24 +1,26 @@
 'use strict';
 
-var detectInputType = require('./lib/detect-inputtype')
-  , stackCollapse   = require('./lib/stackcollapse')
-  , svg             = require('./lib/svg')
-  , defaultOpts     = require('./lib/default-opts')
-  , defaultOptsMeta = require('./lib/default-opts-meta')
-  , filterInternals = require('./lib/filter-internals')
-  , filterLazy      = require('./lib/filter-lazycompile')
+var svg                 = require('./lib/svg')
+  , defaultOpts         = require('./lib/default-opts')
+  , defaultOptsMeta     = require('./lib/default-opts-meta')
+  , cpuprofilify        = require('cpuprofilify')
+  , cpuprofileProcessor = require('./lib/cpuprofile-processor');
+
+function fromCpuProfile(cpuprofile, opts) {
+  var processed = cpuprofileProcessor(cpuprofile, opts).process();
+  return svg(processed, opts);
+}
 
 exports = module.exports =
 
 /**
  * Converts an array of call graph lines into an svg document.
- * If `opts.inputtype` is not given it will be detected from the input.
  *
  * @name flamegraph
  * @function
- * @param {Array.<string>} arr      input lines to render svg for
- * @param {Object} opts objects that affect the visualization
- * @param {string} opts.inputtype       the type of callgraph `instruments | perf`
+ * @param {Array.<string>} arr          input lines to render svg for
+ * @param {Object} opts                 objects that affect the visualization
+ * @param {Object} opts.profile         options passed to cpuprofilify @see [cpuprofilify.convert params](https://github.com/thlorenz/cpuprofilify#parameters)
  * @param {string} opts.fonttype        type of font to use               default: `'Verdana'`
  * @param {number} opts.fontsize        base text size                    default: `12`
  * @param {number} opts.imagewidth      max width, pixels                 default: `1200`
@@ -34,41 +36,30 @@ exports = module.exports =
  * @param {boolean} opts.hash           color by function name            default: `true`
  * @param {string} opts.titletext       centered heading                  default: `'Flame Graph'`
  * @param {string} opts.nametype        what are the names in the data?   default: `'Function:'`
- * @param {boolean} opts.keepOptimizationInfo keep function optimization information  default: `false`
- * @param {boolean} opts.keepInternals  keep internal methods             default: `false`
  * @return {string} svg                 the rendered svg
  */
 function flamegraph(arr, opts) {
+  var profile;
   if (!Array.isArray(arr)) throw new TypeError('First arg needs to be an array of lines.');
 
   opts = opts || {};
-  var collapsed = stackCollapseFromArray(arr, opts.inputtype);
-  collapsed = filterLazy(collapsed, opts);
-  if (!opts.internals) collapsed = filterInternals(collapsed, opts);
-  return svg(collapsed, opts);
+  try {
+    profile = cpuprofilify().convert(arr, opts.profile) 
+  } catch (err) {
+    // not a valid input to cpuprofilify -- maybe it's an actual cpuprofile already?
+    try {
+      profile = JSON.parse(arr.join('\n'));
+    } catch (parseErr) {
+      // if not throw the original cpuprofilify error
+      throw err;
+    }
+  }
+
+  // at this point we have a cpuprofile
+  return fromCpuProfile(profile, opts);
 }
 
-var stackCollapseFromArray = exports.stackCollapseFromArray = 
 
-/**
- * Collapses a callgraph inside a given lines array line by line.
- * 
- * @name flamegraph::stackCollapseFromArray
- * @function
- * @param {string} type the type of input to collapse (if not supplied it is detected from the input)
- * @param {Array.<string>} arr lines to collapse
- * @return {Array.<string>} array of collapsed lines
- */
-function stackCollpaseFromArray (arr, inputType) {
-  if (!Array.isArray(arr)) throw new TypeError('First arg needs to be an array of lines.');
-
-  inputType = inputType || detectInputType(arr);
-  if (!inputType) throw new Error('No input type given and unable to detect it for the given input!');
-
-  return stackCollapse(inputType, arr);
-}
-
-exports.stackCollapse   = stackCollapse;
 exports.svg             = svg;
 exports.defaultOpts     = defaultOpts;
 exports.defaultOptsMeta = defaultOptsMeta;

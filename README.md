@@ -80,8 +80,7 @@ The input data needs to be generated as follows:
 </dt>
 <dd>
 <div class="description">
-<p>Converts an array of call graph lines into an svg document.
-If <code>opts.inputtype</code> is not given it will be detected from the input.</p>
+<p>Converts an array of call graph lines into an svg document.</p>
 </div>
 <h5>Parameters:</h5>
 <table class="params">
@@ -117,11 +116,11 @@ If <code>opts.inputtype</code> is not given it will be detected from the input.<
 </thead>
 <tbody>
 <tr>
-<td class="name"><code>inputtype</code></td>
+<td class="name"><code>profile</code></td>
 <td class="type">
-<span class="param-type">string</span>
+<span class="param-type">Object</span>
 </td>
-<td class="description last"><p>the type of callgraph <code>instruments | perf</code></p></td>
+<td class="description last"><p>options passed to cpuprofilify @see <a href="https://github.com/thlorenz/cpuprofilify#parameters">cpuprofilify.convert params</a></p></td>
 </tr>
 <tr>
 <td class="name"><code>fonttype</code></td>
@@ -238,15 +237,15 @@ If <code>opts.inputtype</code> is not given it will be detected from the input.<
 <dt class="tag-source">Source:</dt>
 <dd class="tag-source"><ul class="dummy">
 <li>
-<a href="https://github.com/thlorenz/flamegraph/blob/master/index.js">index.js</a>
+<a href="https://github.com/thlorenz/flamegraph/blob/object-graph/index.js">index.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/flamegraph/blob/master/index.js#L11">lineno 11</a>
+<a href="https://github.com/thlorenz/flamegraph/blob/object-graph/index.js#L16">lineno 16</a>
 </li>
 </ul></dd>
 </dl>
 <h5>Returns:</h5>
 <div class="param-desc">
-<p>svg             the rendered svg</p>
+<p>svg                 the rendered svg</p>
 </div>
 <dl>
 <dt>
@@ -298,9 +297,9 @@ fromStream(process.stdin, opts).pipe(process.stdout);</code></pre>
 <dt class="tag-source">Source:</dt>
 <dd class="tag-source"><ul class="dummy">
 <li>
-<a href="https://github.com/thlorenz/flamegraph/blob/master/from-stream.js">from-stream.js</a>
+<a href="https://github.com/thlorenz/flamegraph/blob/object-graph/from-stream.js">from-stream.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/flamegraph/blob/master/from-stream.js#L12">lineno 12</a>
+<a href="https://github.com/thlorenz/flamegraph/blob/object-graph/from-stream.js#L12">lineno 12</a>
 </li>
 </ul></dd>
 </dl>
@@ -314,62 +313,6 @@ Type
 </dt>
 <dd>
 <span class="param-type">ReadableStream</span>
-</dd>
-</dl>
-</dd>
-<dt>
-<h4 class="name" id="flamegraph::stackCollapseFromArray"><span class="type-signature"></span>flamegraph::stackCollapseFromArray<span class="signature">(type, arr)</span><span class="type-signature"> &rarr; {Array.&lt;string>}</span></h4>
-</dt>
-<dd>
-<div class="description">
-<p>Collapses a callgraph inside a given lines array line by line.</p>
-</div>
-<h5>Parameters:</h5>
-<table class="params">
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th class="last">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="name"><code>type</code></td>
-<td class="type">
-<span class="param-type">string</span>
-</td>
-<td class="description last"><p>the type of input to collapse (if not supplied it is detected from the input)</p></td>
-</tr>
-<tr>
-<td class="name"><code>arr</code></td>
-<td class="type">
-<span class="param-type">Array.&lt;string></span>
-</td>
-<td class="description last"><p>lines to collapse</p></td>
-</tr>
-</tbody>
-</table>
-<dl class="details">
-<dt class="tag-source">Source:</dt>
-<dd class="tag-source"><ul class="dummy">
-<li>
-<a href="https://github.com/thlorenz/flamegraph/blob/master/index.js">index.js</a>
-<span>, </span>
-<a href="https://github.com/thlorenz/flamegraph/blob/master/index.js#L47">lineno 47</a>
-</li>
-</ul></dd>
-</dl>
-<h5>Returns:</h5>
-<div class="param-desc">
-<p>array of collapsed lines</p>
-</div>
-<dl>
-<dt>
-Type
-</dt>
-<dd>
-<span class="param-type">Array.&lt;string></span>
 </dd>
 </dl>
 </dd>
@@ -410,9 +353,9 @@ Type
 <dt class="tag-source">Source:</dt>
 <dd class="tag-source"><ul class="dummy">
 <li>
-<a href="https://github.com/thlorenz/flamegraph/blob/master/lib/svg.js">lib/svg.js</a>
+<a href="https://github.com/thlorenz/flamegraph/blob/object-graph/lib/svg.js">lib/svg.js</a>
 <span>, </span>
-<a href="https://github.com/thlorenz/flamegraph/blob/master/lib/svg.js#L11">lineno 11</a>
+<a href="https://github.com/thlorenz/flamegraph/blob/object-graph/lib/svg.js#L23">lineno 23</a>
 </li>
 </ul></dd>
 </dl>

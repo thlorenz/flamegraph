@@ -2,9 +2,9 @@
 /*jshint browser: true*/
 
 var flamegraph = require('../')
-  , jitResolver = require('resolve-jit-symbols')
   , initSearch = require('./init-search')
   , zoom = require('./zoom')()
+  , xtend = require('xtend')
   , resolver;
 
 var optsTemplate = require('./opts-template.hbs');
@@ -15,10 +15,18 @@ var mapFileEl       = document.getElementById('map-file')
 var optionsEl       = document.getElementById('options');
 var instructionsEl  = document.getElementById('instructions');
 
+var map;
+var showInternalsProfile = { 
+    unresolveds  : true
+  , v8internals  : true
+  , v8gc         : true
+  , sysinternals : true
+}
+
 var excludeOptions = [ 'fonttype', 'fontwidth', 'fontsize', 'imagewidth', 'countname', 'colors', 'timemax', 'factor', 'hash', 'title', 'titlestring', 'nametype', 'bgcolor1', 'bgcolor2' ];
 var usedMetaKeys = Object.keys(flamegraph.defaultOptsMeta).filter(function (k) { return !~excludeOptions.indexOf(k) });
 
-var currentCallgraph;
+var currentTrace;
 
 function renderOptions() {
   var opts = flamegraph.defaultOpts
@@ -66,7 +74,7 @@ function getOptions() {
       }
       acc[k] = val;
       return acc;
-    }, flamegraph.defaultOpts);
+    }, xtend(flamegraph.defaultOpts));
 }
 
 function onOptionsChange(e) {
@@ -100,8 +108,11 @@ function render(arr) {
 
   var svg;
   try {
-    currentCallgraph = arr;
+    currentTrace = arr;
     opts.removenarrows = false;
+    if (opts.internals) opts.profile = xtend(showInternalsProfile);
+    opts.profile.map = map;
+
     svg = flamegraph(arr, opts);
     flamegraphEl.innerHTML= svg;
     hookHoverMethods();
@@ -112,8 +123,8 @@ function render(arr) {
 }
 
 function refresh() {
-  if (!currentCallgraph) return;
-  render(currentCallgraph);
+  if (!currentTrace) return;
+  render(currentTrace);
   initSearch.refresh();
 }
 
@@ -138,9 +149,7 @@ function processCallgraphFile(e) {
 }
 
 function processMapFile(e) {
-  var map = e.target.result;
-  resolver = jitResolver(map);
-  if (currentCallgraph) currentCallgraph = resolver.resolveMulti(currentCallgraph);
+  map = e.target.result;
   refresh();
 }
 

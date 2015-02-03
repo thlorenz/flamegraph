@@ -47,8 +47,7 @@ var parsed = {
           depth: 0,
           etime: 13135,
           stime: 0 } },
-    time: 13135,
-    ignored: 0 };
+    time: 13135 };
 
 function inspect(obj, depth) {
   console.error(require('util').inspect(obj, false, depth || 5, true));
@@ -81,8 +80,12 @@ test('\ncontextifying parsed stack with default options', function (t) {
         palette_map: {},
         pal_file: 'palette.map',
         removenarrows: true,
-        internals: false,
-        optimizationinfo: false,
+        profile:
+        { shortStack: true,
+          unresolveds: false,
+          v8internals: false,
+          v8gc: true,
+          sysinternals: false },
         imageheight: 194,
         xpad: 10,
         titleX: 600,

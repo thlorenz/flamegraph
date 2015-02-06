@@ -1,6 +1,6 @@
 {
   "name": "flamegraph",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Generates flamegraphs with Node.js or in the browser",
   "main": "index.js",
   "browserify": {

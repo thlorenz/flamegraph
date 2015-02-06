@@ -113,6 +113,7 @@ label {
   fill: rgb(165, 133, 229);
 }
 
+/* blink animation */
 .func_g.blink rect {
   animation: blink 0.2s steps(20, start) infinite alternate;
   -webkit-animation: blink 0.2s steps(20, start) infinite alternate;
@@ -129,3 +130,29 @@ label {
       opacity: 0.3;
     }
   }
+
+/* spin animation */
+.spinner {
+  background: rgba(0, 0, 0, 0.75);
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: absolute;
+}
+
+.spinner  .center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -50px;
+}
+
+.spinner .msg {
+  color: white;
+  font-size: 18px;
+  position: absolute;
+  top: 30%;
+  left: 30%;
+}

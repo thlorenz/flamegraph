@@ -14,6 +14,7 @@ var callgraphFileEl = document.getElementById('callgraph-file')
 var mapFileEl       = document.getElementById('map-file')
 var optionsEl       = document.getElementById('options');
 var instructionsEl  = document.getElementById('instructions');
+var spinnerEl       = document.getElementById('spinner');
 
 var map;
 var showInternalsProfile = { 
@@ -104,21 +105,30 @@ function hookHoverMethods() {
 function render(arr) {
   if (instructionsEl.parentElement) instructionsEl.parentElement.removeChild(instructionsEl);
 
-  var opts = getOptions();
+  spinnerEl.classList.remove('hidden');
+  // give spinner overlay a chance to appear before blocking EVERYTHING with our crunching
+  // and for christ's sake find some time to refactor this to run on a web worker ;)
+  setTimeout(doWork, 10);
 
-  var svg;
-  try {
-    currentTrace = arr;
-    opts.removenarrows = false;
-    if (opts.internals) opts.profile = xtend(showInternalsProfile);
-    opts.profile.map = map;
+  function doWork() {
+    var opts = getOptions();
 
-    svg = flamegraph(arr, opts);
-    flamegraphEl.innerHTML= svg;
-    hookHoverMethods();
-    zoom.init(opts);
-  } catch (err) {
-    flamegraphEl.innerHTML = '<br><p class="error">' + err.toString() + '</p>';
+    var svg;
+    try {
+      currentTrace = arr;
+      opts.removenarrows = false;
+      if (opts.internals) opts.profile = xtend(showInternalsProfile);
+      opts.profile.map = map;
+
+      svg = flamegraph(arr, opts);
+      flamegraphEl.innerHTML= svg;
+      hookHoverMethods();
+      zoom.init(opts);
+    } catch (err) {
+      flamegraphEl.innerHTML = '<br><p class="error">' + err.toString() + '</p>';
+    }
+
+    spinnerEl.classList.add('hidden');
   }
 }
 

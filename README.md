@@ -1,4 +1,4 @@
-# flamegraph [![build status](https://secure.travis-ci.org/thlorenz/flamegraph.png)](http://travis-ci.org/thlorenz/flamegraph) 
+# flamegraph [![build status](https://secure.travis-ci.org/thlorenz/flamegraph.png)](http://travis-ci.org/thlorenz/flamegraph)
 
 [![testling badge](https://ci.testling.com/thlorenz/flamegraph.png)](https://ci.testling.com/thlorenz/flamegraph)
 
@@ -29,6 +29,10 @@ OPTIONS:
 
   --inputtype -t      the type of callgraph 'instruments | perf | cpuprofile'
 
+  --file -f           the input csv file (may also be piped)
+  --output -o         the output svg file (may also be displayed in stdout)
+  --map -m            a mapping / symbols file, named perf-<pid>.map, generated using node --perf-basic-prof
+
   --fonttype          font family used                  default: 'Verdana'
   --fontsize          base text size                    default: 12
   --imagewidth        max width, pixels                 default: 1200
@@ -49,11 +53,13 @@ OPTIONS:
   --internals         include internal functions        default: false
   --optimizationinfo  include optimization indicators   default: false
 
-  --help      -h  print this help message 
+  --help      -h  print this help message
 
 EXAMPLE:
 
   cat instruments-callgraph.csv | flamegraph -t instruments > flamegraph.svg
+
+  flamegraph -t instruments -f instruments-callgraph.csv -m perf-4499.map -o flamegraph.svg
 ```
 
 The input data needs to be generated as follows:

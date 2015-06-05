@@ -13,9 +13,9 @@ function usage() {
 }
 
 var argv = minimist(process.argv.slice(2)
-  , { boolean: [ 'h', 'help' ] 
-    , string: [ 't', 'inputtype' ]
-    }
+  , { boolean: [ 'h', 'help' ]
+  , string: [ 't', 'inputtype', 'm', 'map', 'f', 'file', 'o', 'output' ]
+  }
 );
 
 function inspect(obj, depth) {
@@ -24,4 +24,15 @@ function inspect(obj, depth) {
 
 if (argv.h || argv.help) return usage();
 
-flamegraphFromStream(process.stdin, argv).pipe(process.stdout)
+var input = process.stdin;
+if (argv.f || argv.file)
+  input = fs.createReadStream(argv.f || argv.file);
+
+var output = process.stdout;
+if (argv.o || argv.output)
+  output = fs.createWriteStream(argv.o || argv.output);
+
+if (argv.m || argv.map)
+  argv.profile = { map: fs.readFileSync(argv.m || argv.map).toString() };
+
+flamegraphFromStream(input, argv).pipe(output);

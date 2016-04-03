@@ -27,8 +27,8 @@ proto.init = function init(opts) {
 
   this._flamegraphSvgEl = document.getElementById('flamegraph-svg');
   this._svgBackgroundEl = document.getElementById('svg-background');
-  this._viewBoxWidth = this._flamegraphSvgEl.dataset.width;
-  this._viewBoxHeight = this._flamegraphSvgEl.dataset.height;
+  this._viewBoxWidth = this._flamegraphSvgEl.getAttribute('width');
+  this._viewBoxHeight = this._flamegraphSvgEl.getAttribute('height');
   this._performZoom = performZoom(this);
 
   this._opts = opts;
@@ -60,7 +60,7 @@ proto._zoomRects = function _zoomRects() {
     text = func.children[2];
     rect = func.children[1];
   
-    w = rect.dataset.width;
+    w = rect.getAttribute('width');
     newWidth = w * this._zoomLevel;
 
     // ensure to keep search matches visible
@@ -70,17 +70,17 @@ proto._zoomRects = function _zoomRects() {
     if (newWidth < this._opts.minwidth) func.classList.add('hidden');
     else func.classList.remove('hidden');
 
-    x = rect.dataset.x;
+    x = rect.getAttribute('x');
     newX = x * this._zoomLevel;
     
     rect.setAttribute('width', newWidth);
     rect.setAttribute('x', newX);
     
     if (!text) continue;
-    x = text.dataset.x;
+    x = text.getAttribute('x');
     text.setAttribute('x', x * this._zoomLevel);
 
-    funcName = func.dataset.funcname;
+    funcName = func.getAttribute('data-funcname');
     this._redrawText(funcName, text, w * this._zoomLevel);
   }
 }
@@ -88,7 +88,7 @@ proto._zoomRects = function _zoomRects() {
 proto._zoom = function _zoom(e) {
   if (!e.ctrlKey) return;
 
-  var add = (-e.wheelDeltaY / 400 * this._zoomLevel );
+  var add = (-e.deltaY / 400 * this._zoomLevel );
   if (!add) return;
 
   this._zoomLevel = add + this._zoomLevel;
@@ -98,9 +98,9 @@ proto._zoom = function _zoom(e) {
   var w, x, currentWidth, newWidth, newViewBox, viewX;
 
   // zoom overall image width
-  currentWidth = this._flamegraphSvgEl.getAttribute('width')
-  w = this._flamegraphSvgEl.dataset.width;
-  x = this._flamegraphSvgEl.dataset.x;
+  currentWidth = this._flamegraphSvgEl.getAttribute('width');
+  w = this._flamegraphSvgEl.getAttribute('width');
+  x = this._flamegraphSvgEl.getAttribute('x');
 
   newWidth = w * this._zoomLevel;
   newViewBox = '0 0 ' + newWidth + ' ' + this._viewBoxHeight;

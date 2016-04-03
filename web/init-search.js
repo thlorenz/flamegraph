@@ -30,9 +30,9 @@ function addMatchIndicator(el) {
 
 function removeMatchIndicator(el) {
   el.classList.remove('match');  
-  var rect = el.children[1]
-  rect.setAttribute('width', parseInt(rect.dataset.width));
-  rect.setAttribute('height', parseInt(rect.dataset.height));
+  var rect = el.children[1];
+  rect.setAttribute('width', parseInt(rect.getAttribute('width')));
+  rect.setAttribute('height', parseInt(rect.getAttribute('height')));
 }
 
 function addBlink(el) {
@@ -89,9 +89,9 @@ function onQueryChange() {
     var func_g = func_gs[i];
 
     if (isregex) {
-      if (regex.test(func_g.dataset.search)) indicateMatch(func_g, blink);
+      if (regex.test(func_g.getAttribute('data-search'))) indicateMatch(func_g, blink);
     } else {
-      if (~func_g.dataset.search.indexOf(query)) indicateMatch(func_g, blink);
+      if (~func_g.getAttribute('data-search').indexOf(query)) indicateMatch(func_g, blink);
     }
   }
 }

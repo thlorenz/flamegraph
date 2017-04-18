@@ -20,6 +20,9 @@ cat instruments-callgraph.csv | flamegraph -t instruments > flamegraph.svg
 
 **Requires Node.js version `0.11.13` or higher**.
 
+**NOTE** currently not working with cpu profiles saved from Chrome DevTools due to a format change. For more info and to
+help fixing it please [see this issue](https://github.com/thlorenz/flamegraph/issues/21).
+
 ```
 flamegraph <options>
 

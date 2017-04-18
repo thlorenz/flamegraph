@@ -1,14 +1,12 @@
-'use strict';
-
 var svg                 = require('./lib/svg')
-  , defaultOpts         = require('./lib/default-opts')
-  , defaultOptsMeta     = require('./lib/default-opts-meta')
-  , cpuprofilify        = require('cpuprofilify')
-  , cpuprofileProcessor = require('./lib/cpuprofile-processor');
+var defaultOpts         = require('./lib/default-opts')
+var defaultOptsMeta     = require('./lib/default-opts-meta')
+var cpuprofilify        = require('cpuprofilify')
+var cpuprofileProcessor = require('./lib/cpuprofile-processor')
 
 function fromCpuProfile(cpuprofile, opts) {
-  var processed = cpuprofileProcessor(cpuprofile, opts).process();
-  return svg(processed, opts);
+  var processed = cpuprofileProcessor(cpuprofile, opts).process()
+  return svg(processed, opts)
 }
 
 exports = module.exports =
@@ -39,27 +37,26 @@ exports = module.exports =
  * @return {string} svg                 the rendered svg
  */
 function flamegraph(arr, opts) {
-  var profile;
-  if (!Array.isArray(arr)) throw new TypeError('First arg needs to be an array of lines.');
+  var profile
+  if (!Array.isArray(arr)) throw new TypeError('First arg needs to be an array of lines.')
 
-  opts = opts || {};
+  opts = opts || {}
   try {
-    profile = cpuprofilify().convert(arr, opts.profile) 
+    profile = cpuprofilify().convert(arr, opts.profile)
   } catch (err) {
     // not a valid input to cpuprofilify -- maybe it's an actual cpuprofile already?
     try {
-      profile = JSON.parse(arr.join('\n'));
+      profile = JSON.parse(arr.join('\n'))
     } catch (parseErr) {
       // if not throw the original cpuprofilify error
-      throw err;
+      throw err
     }
   }
 
   // at this point we have a cpuprofile
-  return fromCpuProfile(profile, opts);
+  return fromCpuProfile(profile, opts)
 }
 
-
-exports.svg             = svg;
-exports.defaultOpts     = defaultOpts;
-exports.defaultOptsMeta = defaultOptsMeta;
+exports.svg             = svg
+exports.defaultOpts     = defaultOpts
+exports.defaultOptsMeta = defaultOptsMeta

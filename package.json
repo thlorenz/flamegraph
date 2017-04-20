@@ -15,6 +15,14 @@
   "bin": {
     "flamegraph": "bin/flamegraph.js"
   },
+  "files": [
+    "bin",
+    "lib",
+    "index.js",
+    "from-stream.js",
+    "LICENSE",
+    "REAMDE.md"
+  ],
   "scripts": {
     "docme": "docme README.md -- --configure .jsdocrc",
     "test-main": "set -e; for t in test/*.js; do node $t; done",

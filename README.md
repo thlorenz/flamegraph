@@ -5,7 +5,7 @@
 Generates flamegraphs with Node.js or in the browser.
 
 ```
-cat instruments-callgraph.csv | flamegraph -t instruments > flamegraph.svg
+cat dtrace.txt | flamegraph -t dtrace > flamegraph.svg
 ```
 
 [Try the online flamegraph app](http://thlorenz.github.io/flamegraph/web/)
@@ -30,7 +30,7 @@ Generates a flamegraph from the callgraph data of the given `inputtype` that is 
 
 OPTIONS:
 
-  --inputtype -t      the type of callgraph 'instruments | perf | cpuprofile'
+  --inputtype -t      the type of callgraph 'perf | cpuprofile'
 
   --file -f           the input csv file (may also be piped)
   --output -o         the output svg file (may also be displayed in stdout)
@@ -60,15 +60,13 @@ OPTIONS:
 
 EXAMPLE:
 
-  cat instruments-callgraph.csv | flamegraph -t instruments > flamegraph.svg
-
-  flamegraph -t instruments -f instruments-callgraph.csv -m perf-4499.map -o flamegraph.svg
+  cat dtrace.txt | flamegraph -t dtrace > flamegraph.svg
 ```
 
 The input data needs to be generated as follows:
 
 - [use perf on linux](https://github.com/thlorenz/flamegraph/blob/master/generate-perf-data.md)
-- [use instruments on mac](https://github.com/thlorenz/flamegraph/blob/gh-pages/web/img/instruments.gif)
+- [use dtrace on OSX](https://github.com/thlorenz/cpuprofilify#instructions)
 
 ## API
 

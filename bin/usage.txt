@@ -4,7 +4,7 @@ Generates a flamegraph from the callgraph data of the given `inputtype` that is 
 
 OPTIONS:
 
-  --inputtype -t      the type of callgraph 'instruments | perf | cpuprofile'
+  --inputtype -t      the type of callgraph 'perf | cpuprofile'
 
   --fonttype          font family used                  default: 'Verdana'
   --fontsize          base text size                    default: 12
@@ -30,4 +30,4 @@ OPTIONS:
 
 EXAMPLE:
 
-  cat instruments-callgraph.csv | flamegraph -t instruments > flamegraph.svg
+  cat dtrace.txt | flamegraph -t dtrace > flamegraph.svg

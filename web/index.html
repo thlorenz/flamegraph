@@ -9,10 +9,10 @@
   <section>
     <div class="ui-part load-container">
       <div class="callgraph">
-        <label>Callgraph:</label><input type="file" id="callgraph-file" name="callgraph-file" class="callgraph-file" /> 
+        <label>Callgraph:</label><input type="file" id="callgraph-file" name="callgraph-file" class="callgraph-file" />
       </div>
       <div class="map">
-        <label>Mapfile:</label><input type="file" id="map-file" name="map-file" class="map-file" /> 
+        <label>Mapfile:</label><input type="file" id="map-file" name="map-file" class="map-file" />
       </div>
       <a href="example.html">Example flamegraph</a>
     </div>
@@ -22,7 +22,7 @@
       <input id="search-regex" type="checkbox">Regex
       <input id="search-blink" type="checkbox">Blink
       <input id="search-error" type="text" readonly="readonly">
-      <span>Scroll while holding the <code>Ctrl</code> key in order to Zoom (Command+Ctrl on Mac)</span>
+      <span>Scroll while holding the <code>Ctrl</code> key in order to Zoom</span>
     </div>
     <div class="instructions ui-part" id="instructions">
       <h2>Instructions</h2>
@@ -36,27 +36,18 @@
       <div class="instructions-sheet">
         <h3>Mac</h3>
         <h4>Create a Callgraph</h4>
-        <p>Run your app</p>
-        <pre><code>node --perf-basic-prof app.js</code></pre>
-
-        <p>Use the 
-          <a href="https://developer.apple.com/library/ios/documentation/AnalysisTools/Reference/Instruments_User_Reference/TimeProfilerInstrument/TimeProfilerInstrument.html">
-            Instruments Time Profiler
-          </a>
-          to collect stack trace information as follows:
+        <p>Install <a href="https://github.com/thlorenz/cpuprofilify">cpuprofilify</a></p>
+        <p>Run your app with DTrace</p>
+        <pre><code>sudo profile_1ms.d -c 'node --perf-basic-prof &lt;app&gt;' &gt; dtrace.txt</code></pre>
+        <p>
+          Load <code>dtrace.txt</code> into the app as well as <code>/tmp/perf-&lt;pid&gt;.map</code>
         </p>
-        <ol>
-          <li>attach Instruments to your running app and excercise it to build the <i>call tree</i>.</li>
-          <li>expand the part of the <i>call tree</i> you are interested in</li>
-          <li><i>Instrument/Export Track</i> to a <code>.csv</code> file</li>
-          <li>cleanly exit your app and check that a map file was generated at <code>/tmp/perf-&lt;pid&gt;.map</code></li>
-        </ol>
-
-        <h4>Load</h4>
-        <ol>
-          <li>Load the Instruments generated <code>.csv</code> as the <i>Callgraph</i></li>
-          <li>Load the <code>/tmp/perf-&lt;pid&gt;.map</code> as the <i>Mapfile</i></li>
-        </ol>
+        <p>Alternatively pipe through cpuprofilify:</p>
+        <pre><code>cat dtrace.txt | cpuprofilify &gt; dtrace.cpuprofile</code></pre>
+        <p>and load that into DevTools or the flamegraph app.</p>
+        <p> One liner for the above:</p>
+        <pre><code>sudo profile_1ms.d -c 'node --perf-basic-prof &lt;app&gt;' &gt; | cpuprofilify &gt; dtrace.cpuprofile</code></pre>
+        <p>Make sure to cleanly shutdown your app so the symbols files can be written, <a href="https://github.com/thlorenz/talks/blob/gh-pages/debugging-profiling-io.js/demos/demo-2/app.js#L22-L40">see here</a></p>
       </div>
 
       <div class="instructions-sheet">
@@ -73,6 +64,10 @@
         Just loading the <code>perf-script.txt</code> file as the <i>Callgraph</i> suffices since <code>perf</code> already resolved the symbols.
       </div>
 
+      <div class="instructions-sheet">
+        <h3>JavaScript only Flamegraphs Anywhere</h3>
+        <p>Create a cpuprofile with <a href="https://github.com/node-inspector/v8-profiler">v8-profiler</a> and load that into the app</p>
+      </div>
     </div>
     <div id="flamegraph" class="ui-part"></div>
 
@@ -82,7 +77,7 @@
   <div id="spinner" class="spinner hidden">
     <div class="msg">
       <p>Be very patient, this may take up to a minute, depending on your profile size.</p>
-      <p>I should mention that pull requests to load that onto a web worker are welcome ;)</p> 
+      <p>I should mention that pull requests to load that onto a web worker are welcome ;)</p>
     </div>
     <img src="spinner.gif" class="center" alt="spinner">
   </div>

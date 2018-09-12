@@ -29,7 +29,7 @@
 <text text-anchor="left" x="{{xpad}}" y="{{detailsY}}" font-size="{{fontsize}}" font-family="{{fonttype}}" fill="rgb(0,0,0)" id="details"> </text>
 
 {{#each nodes}}
-<g class="func_g {{class}}" onmouseover="s('{{{name}}} {{{samples}}}')" onmouseout="c()" data-search="{{{search}}}" data-funcname="{{{func}}}">
+<g class="func_g {{class}}" onmouseover="typeof s === 'function' && s('{{{name}}} {{{samples}}}')" onmouseout="typeof c === 'function' && c()" data-search="{{{search}}}" data-funcname="{{{func}}}">
   <title>{{{name}}} {{{samples}}}</title>
   <rect x="{{rect_x}}" data-x="{{rect_x}}" y="{{rect_y}}" width="{{rect_w}}" data-width="{{rect_w}}" height="{{rect_h}}" data-height="{{rect_h}}" fill="{{rect_fill}}" rx="2" ry="2"></rect>
   <text data-x="{{text_x}}" x="{{text_x}}" y="{{text_y}}" font-size="{{../fontsize}}" font-family="{{../fonttype}}" fill="rgb(0,0,0)">{{{text}}}</text>

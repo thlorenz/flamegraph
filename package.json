@@ -2,7 +2,7 @@
   "name": "flamegraph",
   "version": "1.1.0",
   "description": "Generates flamegraphs with Node.js or in the browser",
-  "main": "index.js",
+  "main": "./dist/flamegraph.js",
   "browserify": {
     "transform": [
       "hbsfy",
@@ -17,8 +17,7 @@
   },
   "files": [
     "bin",
-    "lib",
-    "index.js",
+    "dist",
     "from-stream.js",
     "LICENSE",
     "REAMDE.md"
@@ -33,7 +32,10 @@
     "test-all": "npm run test-main && npm run test-0.10 && npm run test-0.12 && npm run test-4 && npm run test-6",
     "test": "if [ -e $TRAVIS ]; then npm run test-all; else npm run test-main; fi",
     "watch": "watchify -d web/main.js -o web/bundle.js",
-    "bundle": "browserify web/main.js | uglifyjs > web/bundle.js"
+    "bundle": "browserify web/main.js | uglifyjs > web/bundle.js",
+    "dist:bundle": "browserify ./index.js --standalone flamegraph > ./dist/flamegraph.js",
+    "dist:minify": "cat ./dist/flamegraph.js | uglifyjs > ./dist/flamegraph.min.js",
+    "dist": "npm run dist:bundle && npm run dist:minify"
   },
   "repository": {
     "type": "git",
@@ -42,26 +44,26 @@
   "homepage": "https://github.com/thlorenz/flamegraph",
   "dependencies": {
     "concat-stream": "~1.4.6",
-    "cpuprofilify": "~1.0.0",
-    "handlebars": "~2.0.0-alpha.4",
-    "minimist": "~0.2.0",
-    "readable-stream": "~1.0.27-1",
-    "through2": "~0.6.0",
-    "trace-filter-internals": "^0.1.0",
-    "xtend": "~4.0.0"
+    "minimist": "~1.2.0",
+    "through2": "~0.6.0"
   },
   "devDependencies": {
+    "cpuprofilify": "~1.0.0",
+    "handlebars": "~2.0.0-alpha.4",
     "brfs": "~1.0.2",
-    "browserify": "~6.3.2",
+    "browserify": "~16.2.3",
     "debounce": "^1.0.0",
     "hbsfy": "~2.0.0",
     "nave": "~2.2.3",
     "resolve-jit-symbols": "~0.3.4",
     "stream-array": "~1.0.1",
     "tape": "~1.0.4",
-    "uglify-js": "~2.4.15",
+    "uglify-js": "~3.4.9",
     "uniwheel": "^0.1.2",
-    "watchify": "~2.1.1"
+    "watchify": "~2.1.1",
+    "readable-stream": "~1.0.27-1",
+    "trace-filter-internals": "^0.1.0",
+    "xtend": "~4.0.0"
   },
   "keywords": [
     "flamegraph",

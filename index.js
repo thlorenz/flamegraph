@@ -4,8 +4,12 @@ var defaultOptsMeta     = require('./lib/default-opts-meta')
 var cpuprofilify        = require('cpuprofilify')
 var cpuprofileProcessor = require('./lib/cpuprofile-processor')
 
+function processCpuProfile(cpuprofile, opts) {
+ return cpuprofileProcessor(cpuprofile, opts).process()
+}
+
 function fromCpuProfile(cpuprofile, opts) {
-  var processed = cpuprofileProcessor(cpuprofile, opts).process()
+  var processed = processCpuProfile(cpuprofile, opts)
   return svg(processed, opts)
 }
 
@@ -57,6 +61,8 @@ function flamegraph(arr, opts) {
   return fromCpuProfile(profile, opts)
 }
 
-exports.svg             = svg
-exports.defaultOpts     = defaultOpts
-exports.defaultOptsMeta = defaultOptsMeta
+exports.svg               = svg
+exports.defaultOpts       = defaultOpts
+exports.defaultOptsMeta   = defaultOptsMeta
+exports.processCpuProfile = processCpuProfile
+exports.fromCpuProfile    = fromCpuProfile

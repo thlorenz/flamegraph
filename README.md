@@ -65,7 +65,7 @@ EXAMPLE:
 
 The input data needs to be generated as follows:
 
-- [use perf on linux](https://github.com/thlorenz/flamegraph/blob/master/generate-perf-data.md)
+- [use perf on linux](https://github.com/thlorenz/flamegraph/blob/gh-pages/generate-perf-data.md)
 - [use dtrace on OSX](https://github.com/thlorenz/cpuprofilify#instructions)
 
 ## API
